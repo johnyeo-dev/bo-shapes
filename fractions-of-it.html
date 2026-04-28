@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fractions: "of a number" vs "of IT"</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f0f4ff;
+    color: #1a1a2e;
+    padding: 20px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 1.6rem;
+    color: #1a1a2e;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    text-align: center;
+    color: #555;
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+  }
+
+  /* ── TABS ── */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 10px 22px;
+    border: 2px solid #4361ee;
+    border-radius: 30px;
+    background: white;
+    color: #4361ee;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background: #4361ee;
+    color: white;
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ── CARDS ── */
+  .card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  }
+  .card h2 { font-size: 1.15rem; margin-bottom: 14px; color: #1a1a2e; }
+  .card h3 { font-size: 1rem; margin-bottom: 10px; }
+
+  /* ── KEY CONCEPT BOX ── */
+  .concept-box {
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 18px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .concept-box.blue  { background: #e8f0ff; border-left: 5px solid #4361ee; }
+  .concept-box.green { background: #e8fff0; border-left: 5px solid #2dc653; }
+  .concept-box.red   { background: #fff0f0; border-left: 5px solid #e63946; }
+  .concept-box.gold  { background: #fffbe8; border-left: 5px solid #f5a623; }
+  .concept-box strong { color: #1a1a2e; }
+
+  /* ── SIDE BY SIDE ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+  .col-card {
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+  }
+  .col-card.wrong { background: #fff0f0; border: 2px solid #e63946; }
+  .col-card.right { background: #e8fff0; border: 2px solid #2dc653; }
+  .col-card .badge {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: .5px;
+    margin-bottom: 10px;
+  }
+  .col-card.wrong .badge { background: #e63946; color: white; }
+  .col-card.right .badge { background: #2dc653; color: white; }
+  .big-eq {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 10px 0;
+    line-height: 1.5;
+  }
+  .col-card.wrong .big-eq { color: #e63946; }
+  .col-card.right .big-eq { color: #2dc653; }
+
+  /* ── BAR MODELS ── */
+  .bar-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 4px;
+  }
+  .bar-wrap {
+    position: relative;
+    height: 44px;
+    background: #e0e0e0;
+    border-radius: 6px;
+    overflow: visible;
+    margin-bottom: 18px;
+  }
+  .bar-fill {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: white;
+    transition: width 0.6s ease;
+  }
+
+  /* Segmented bar */
+  .seg-bar {
+    display: flex;
+    height: 50px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 6px;
+    border: 2px solid #999;
+  }
+  .seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: white;
+    flex: 1;
+    border-right: 2px solid rgba(255,255,255,0.4);
+    transition: all .3s;
+  }
+  .seg:last-child { border-right: none; }
+  .seg.empty { background: #ddd; color: #aaa; }
+
+  /* ── STEP BOX ── */
+  .steps { counter-reset: step; }
+  .step {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+    align-items: flex-start;
+  }
+  .step-num {
+    min-width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #4361ee;
+    color: white;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-body { flex: 1; }
+  .step-body p { font-size: 0.93rem; line-height: 1.6; }
+  .step-body .eq {
+    background: #f5f7ff;
+    border-radius: 8px;
+    padding: 8px 14px;
+    margin-top: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #4361ee;
+    display: inline-block;
+  }
+  .step-body .eq.wrong-eq {
+    background: #fff0f0;
+    color: #e63946;
+    text-decoration: line-through;
+    text-decoration-color: #e63946;
+  }
+
+  /* ── FRACTION VISUAL ── */
+  .fraction {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.1;
+    font-weight: 700;
+    font-size: 1.1rem;
+    vertical-align: middle;
+    margin: 0 3px;
+  }
+  .fraction .num { border-bottom: 2px solid currentColor; padding: 0 4px; }
+  .fraction .den { padding: 0 4px; }
+
+  /* ── INTERACTIVE BAR (Tab 2) ── */
+  #interactive-area {
+    user-select: none;
+  }
+  .bar-container {
+    margin-bottom: 24px;
+  }
+  .main-bar {
+    display: flex;
+    height: 60px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 3px solid #4361ee;
+    margin-bottom: 8px;
+  }
+  .unit-cell {
+    flex: 1;
+    border-right: 2px solid rgba(255,255,255,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: white;
+    position: relative;
+  }
+  .unit-cell:last-child { border-right: none; }
+  .unit-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #666;
+    padding: 0 2px;
+  }
+
+  /* Bracket / brace */
+  .brace-row {
+    display: flex;
+    height: 22px;
+    margin-bottom: 4px;
+    position: relative;
+  }
+  .brace-segment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-top: 2px solid;
+    position: absolute;
+    top: 0;
+    padding-top: 2px;
+  }
+
+  /* ── ALERT BOX ── */
+  .alert {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background: #fffbe8;
+    border: 2px solid #f5a623;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+    font-size: 0.93rem;
+    line-height: 1.6;
+  }
+  .alert .icon { font-size: 1.4rem; flex-shrink: 0; }
+
+  /* ── MEMORY TRICK ── */
+  .memory-trick {
+    background: linear-gradient(135deg, #667eea22, #764ba222);
+    border: 2px dashed #764ba2;
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: center;
+    font-size: 0.95rem;
+  }
+  .memory-trick .big { font-size: 1.3rem; font-weight: 700; color: #764ba2; }
+
+  /* ── BUTTON ── */
+  .btn {
+    background: #4361ee;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s;
+    display: block;
+    margin: 0 auto;
+  }
+  .btn:hover { background: #3a53d0; }
+
+  /* ── QUIZ ── */
+  .quiz-q {
+    background: #f5f7ff;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    font-size: 0.93rem;
+    line-height: 1.6;
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+  .quiz-opt {
+    padding: 9px 16px;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    background: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all .2s;
+    text-align: left;
+  }
+  .quiz-opt:hover { border-color: #4361ee; background: #f0f4ff; }
+  .quiz-opt.correct { border-color: #2dc653; background: #e8fff0; color: #1a5c2e; font-weight: 600; }
+  .quiz-opt.wrong   { border-color: #e63946; background: #fff0f0; color: #7a1a1a; font-weight: 600; }
+  .quiz-feedback {
+    display: none;
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct { background: #e8fff0; border: 1px solid #2dc653; color: #1a5c2e; }
+  .quiz-feedback.wrong   { background: #fff0f0; border: 1px solid #e63946; color: #7a1a1a; }
+
+  hr.divider { border: none; border-top: 2px dashed #e0e0e0; margin: 20px 0; }
+</style>
+</head>
+<body>
+
+<h1>🎂 Fractions: "of a number" vs "of IT"</h1>
+<p class="subtitle">A common mix-up that trips up many students — let's fix it once and for all!</p>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('tab1')">📌 The Big Idea</button>
+  <button class="tab-btn" onclick="showTab('tab2')">🎂 John's Cake Problem</button>
+  <button class="tab-btn" onclick="showTab('tab3')">✅ Check Your Understanding</button>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- TAB 1: THE BIG IDEA                           -->
+<!-- ══════════════════════════════════════════════ -->
+<div id="tab1" class="tab-content active">
+
+  <div class="card">
+    <h2>🔑 What does "of" mean in maths?</h2>
+    <div class="concept-box blue">
+      <strong>"of" = multiply</strong><br>
+      Whenever you see <em>"fraction of something"</em>, you <strong>multiply</strong> the fraction by that something.<br><br>
+      <strong>"2/3 of 12"</strong> means <strong>2/3 × 12 = 8</strong>
+    </div>
+
+    <div class="alert">
+      <span class="icon">⚠️</span>
+      <div>
+        <strong>The tricky word: "IT"</strong><br>
+        "It" refers to the amount already mentioned. You must find out <em>what "it" is first</em> before you can take a fraction of it.
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <h3>Compare these two sentences:</h3>
+
+    <div class="two-col">
+      <div class="col-card" style="background:#e8f0ff; border:2px solid #4361ee; text-align:left;">
+        <div class="badge" style="background:#4361ee; color:white;">Example A</div>
+        <p style="font-size:1rem; margin-bottom:10px;">Mary has <strong>2/3 L</strong> of juice.</p>
+        <div class="bar-label">Bar model — the whole = 1 L</div>
+        <div class="bar-wrap" style="margin-bottom:8px;">
+          <div class="bar-fill" style="width:66.6%; background:#4361ee;">2/3 L</div>
+          <div style="position:absolute; top:0; left:66.6%; height:100%; width:33.4%; display:flex; align-items:center; justify-content:center; font-size:0.78rem; color:#999;">1/3 L</div>
+        </div>
+        <p style="font-size:0.85rem; color:#555;">We know exactly: <strong>2/3 of 1 litre = 0.667 L</strong>.<br>No mystery — it's a fixed amount.</p>
+      </div>
+
+      <div class="col-card" style="background:#fff8e8; border:2px solid #f5a623; text-align:left;">
+        <div class="badge" style="background:#f5a623; color:white;">Example B</div>
+        <p style="font-size:1rem; margin-bottom:10px;">Mary drank <strong>2/3 of it</strong>.</p>
+        <div class="bar-label">What is "it"? — We need to know first!</div>
+        <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:8px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:0.78rem; color:#555; width:60px;">If it = 3L:</span>
+            <div class="bar-wrap" style="flex:1; margin:0; height:30px;">
+              <div class="bar-fill" style="width:66.6%; background:#f5a623; font-size:0.75rem;">2 L</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:0.78rem; color:#555; width:60px;">If it = 6L:</span>
+            <div class="bar-wrap" style="flex:1; margin:0; height:30px;">
+              <div class="bar-fill" style="width:66.6%; background:#e07b00; font-size:0.75rem;">4 L</div>
+            </div>
+          </div>
+        </div>
+        <p style="font-size:0.85rem; color:#555;">The amount <strong>changes</strong> depending on what "it" is.<br>You must identify the whole first!</p>
+      </div>
+    </div>
+
+    <div class="memory-trick">
+      <div class="big">🧠 Memory Trick</div>
+      <p style="margin-top:8px;">
+        <strong>"2/3 L"</strong> → already a number (2/3 of ONE litre)<br>
+        <strong>"2/3 of it"</strong> → ask yourself: <em>"2/3 of WHAT?"</em> → find "it" first → then multiply
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- TAB 2: JOHN'S CAKE PROBLEM                    -->
+<!-- ══════════════════════════════════════════════ -->
+<div id="tab2" class="tab-content">
+
+  <div class="card">
+    <h2>🎂 The Problem</h2>
+    <div class="concept-box gold">
+      <strong>John bought <span style="font-size:1.1em;">4/5</span> kg of cake.<br>
+      He gave away <span style="font-size:1.1em;">1/3</span> of it.<br>
+      How much cake did he have left?</strong>
+    </div>
+
+    <div class="alert">
+      <span class="icon">🚨</span>
+      <div>
+        <strong>The #1 mistake students make:</strong><br>
+        They see "4/5" and "1/3" and immediately subtract: <strong>4/5 − 1/3</strong>.<br>
+        But wait — <em>"1/3 of it"</em> is NOT the same as the number 1/3!
+      </div>
+    </div>
+  </div>
+
+  <!-- WRONG vs RIGHT side by side -->
+  <div class="card">
+    <h2>❌ Wrong Way vs ✅ Right Way</h2>
+    <div class="two-col">
+
+      <div class="col-card wrong">
+        <div class="badge">❌ WRONG</div>
+        <p style="font-size:0.9rem; margin-bottom:8px; color:#7a1a1a;">
+          Treating "1/3 of it" as just the <em>number</em> 1/3 and subtracting:
+        </p>
+        <div class="big-eq">4/5 − 1/3 = ?</div>
+        <div style="font-size:0.85rem; color:#e63946; margin-bottom:8px;">
+          12/15 − 5/15 = <strong>7/15 kg</strong> ✗
+        </div>
+        <p style="font-size:0.82rem; color:#7a1a1a;">
+          This treats "1/3" as a separate amount of cake — but John didn't have 1/3 kg sitting somewhere else!
+        </p>
+      </div>
+
+      <div class="col-card right">
+        <div class="badge">✅ RIGHT</div>
+        <p style="font-size:0.9rem; margin-bottom:8px; color:#1a5c2e;">
+          "1/3 of it" = 1/3 of the cake John bought (4/5 kg):
+        </p>
+        <div class="big-eq">1/3 × 4/5 = 4/15</div>
+        <div style="font-size:0.85rem; color:#2dc653; margin-bottom:8px;">
+          given away = <strong>4/15 kg</strong>
+        </div>
+        <p style="font-size:0.82rem; color:#1a5c2e;">
+          Then: 4/5 − 4/15 = 12/15 − 4/15 = <strong>8/15 kg</strong> ✓
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BAR MODEL -->
+  <div class="card">
+    <h2>📊 Bar Model — See It Visually</h2>
+    <p style="font-size:0.9rem; color:#555; margin-bottom:18px;">
+      The whole bar below = <strong>1 kg</strong> (divided into 5 equal parts, each = 1/5 kg)
+    </p>
+
+    <!-- Step 1: show 4/5 -->
+    <div class="bar-label">Step 1 — John bought 4/5 kg (4 out of 5 parts)</div>
+    <div class="seg-bar" id="bar-step1">
+      <div class="seg" style="background:#4361ee;">1/5</div>
+      <div class="seg" style="background:#4361ee;">1/5</div>
+      <div class="seg" style="background:#4361ee;">1/5</div>
+      <div class="seg" style="background:#4361ee;">1/5</div>
+      <div class="seg empty">1/5</div>
+    </div>
+    <div style="display:flex; margin-bottom:18px;">
+      <div style="flex:4; text-align:center; font-size:0.8rem; font-weight:700; color:#4361ee; padding-top:2px;">← 4/5 kg (what John bought) →</div>
+      <div style="flex:1; text-align:center; font-size:0.8rem; color:#999; padding-top:2px;">not his</div>
+    </div>
+
+    <!-- Step 2: split 4/5 into thirds -->
+    <div class="bar-label">Step 2 — Split John's 4/5 kg into 3 equal parts (to find 1/3 of it)</div>
+    <div style="display:flex; margin-bottom:4px;">
+      <!-- 4/5 divided into 3 equal slices = 4/15 each. Visually: 4 cells / 3 = each cell is 4/3 of a fifth.
+           We show 12 mini-cells total (LCM of 5 and 3 = 15). 4/5 = 12/15, so 12 cells; 1/5 empty = 3 cells -->
+      <div style="flex:12; display:flex; border-radius:8px 0 0 8px; overflow:hidden; border:2px solid #4361ee; border-right:none; height:55px;">
+        <!-- group1: cells 1-4 = 1/3 of 4/5 = given away -->
+        <div style="flex:4; background:#e63946; border-right:3px solid white; display:flex; align-items:center; justify-content:center; flex-direction:column; color:white; font-size:0.72rem; font-weight:700;">
+          <span>1/3 of it</span>
+          <span>= 4/15</span>
+          <span>given away</span>
+        </div>
+        <!-- group2: cells 5-8 -->
+        <div style="flex:4; background:#2dc653; border-right:3px solid white; display:flex; align-items:center; justify-content:center; flex-direction:column; color:white; font-size:0.72rem; font-weight:700;">
+          <span>1/3 of it</span>
+          <span>= 4/15</span>
+          <span>left</span>
+        </div>
+        <!-- group3: cells 9-12 -->
+        <div style="flex:4; background:#2dc653; display:flex; align-items:center; justify-content:center; flex-direction:column; color:white; font-size:0.72rem; font-weight:700;">
+          <span>1/3 of it</span>
+          <span>= 4/15</span>
+          <span>left</span>
+        </div>
+      </div>
+      <div style="flex:3; background:#ddd; border-radius:0 8px 8px 0; border:2px solid #ddd; height:55px; display:flex; align-items:center; justify-content:center; font-size:0.72rem; color:#aaa;">not his</div>
+    </div>
+    <div style="display:flex; margin-bottom:20px;">
+      <div style="flex:4; text-align:center; font-size:0.78rem; color:#e63946; font-weight:600; padding-top:3px;">← given away →</div>
+      <div style="flex:8; text-align:center; font-size:0.78rem; color:#2dc653; font-weight:600; padding-top:3px;">← left with John →</div>
+      <div style="flex:3;"></div>
+    </div>
+
+    <!-- Step 3: answer -->
+    <div class="concept-box green">
+      <strong>Reading the bar model:</strong><br>
+      • John's cake (4/5 kg) is split into <strong>3 equal parts</strong><br>
+      • Each part = 4/5 ÷ 3 = 4/5 × 1/3 = <strong>4/15 kg</strong><br>
+      • He gave away <strong>1 part = 4/15 kg</strong><br>
+      • He kept <strong>2 parts = 8/15 kg</strong>
+    </div>
+  </div>
+
+  <!-- STEP BY STEP WORKING -->
+  <div class="card">
+    <h2>🔢 Step-by-Step Working</h2>
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <p><strong>Spot the key word: "of it"</strong><br>
+          "1/3 of it" → "it" refers to the 4/5 kg John bought.<br>
+          So we need to find: <em>1/3 of 4/5 kg</em></p>
+          <div class="eq">1/3 of 4/5 = 1/3 × 4/5</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <p><strong>Calculate how much was given away</strong><br>
+          Multiply the fractions (top × top, bottom × bottom):</p>
+          <div class="eq">1/3 × 4/5 = (1×4)/(3×5) = 4/15 kg</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <p><strong>Subtract to find what's left</strong><br>
+          Change 4/5 to fifteenths: 4/5 = 12/15</p>
+          <div class="eq">12/15 − 4/15 = 8/15 kg</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num" style="background:#2dc653;">✓</div>
+        <div class="step-body">
+          <p><strong>Answer</strong></p>
+          <div class="eq" style="background:#e8fff0; color:#1a5c2e; font-size:1.1rem;">John had <strong>8/15 kg</strong> of cake left.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="divider">
+
+    <div class="concept-box red">
+      <strong>Why 4/5 − 1/3 is wrong:</strong><br>
+      4/5 is the <em>total amount of cake</em>. 1/3 is NOT a separate amount — it's a <em>fraction of that cake</em>.<br>
+      Subtracting 1/3 from 4/5 would mean John had 1/3 kg of something else, which makes no sense in this problem!
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- TAB 3: CHECK YOUR UNDERSTANDING               -->
+<!-- ══════════════════════════════════════════════ -->
+<div id="tab3" class="tab-content">
+
+  <div class="card">
+    <h2>✅ Quick Check — Which is it?</h2>
+    <p style="font-size:0.9rem; color:#555; margin-bottom:16px;">
+      For each question, decide: do you <strong>subtract</strong> the fraction directly, or find <strong>"of it"</strong> first?
+    </p>
+
+    <!-- Q1 -->
+    <div class="quiz-q" id="q1">
+      <strong>Q1.</strong> Sarah has a ribbon <strong>3/4 m</strong> long. She cuts off <strong>1/2 of it</strong>. How much did she cut?
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer('q1','a','wrong')">A) 3/4 − 1/2 = 1/4 m</button>
+        <button class="quiz-opt" onclick="answer('q1','b','correct')">B) 1/2 × 3/4 = 3/8 m ✓</button>
+        <button class="quiz-opt" onclick="answer('q1','c','wrong')">C) 3/4 + 1/2 = 5/4 m</button>
+      </div>
+      <div class="quiz-feedback" id="q1-feedback"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-q" id="q2">
+      <strong>Q2.</strong> A tank holds <strong>5/6 L</strong> of water. Ali pours out <strong>2/5 of it</strong>. How much is poured out?
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer('q2','a','wrong')">A) 5/6 − 2/5 = 13/30 L</button>
+        <button class="quiz-opt" onclick="answer('q2','b','correct')">B) 2/5 × 5/6 = 10/30 = 1/3 L ✓</button>
+        <button class="quiz-opt" onclick="answer('q2','c','wrong')">C) 2/5 L (just take the fraction as the answer)</button>
+      </div>
+      <div class="quiz-feedback" id="q2-feedback"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-q" id="q3">
+      <strong>Q3.</strong> Tom ran <strong>3/5 km</strong>. Ben ran <strong>1/3 km</strong>. How much further did Tom run?
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer('q3','a','correct')">A) 3/5 − 1/3 = 9/15 − 5/15 = 4/15 km ✓</button>
+        <button class="quiz-opt" onclick="answer('q3','b','wrong')">B) 1/3 × 3/5 = 1/5 km</button>
+        <button class="quiz-opt" onclick="answer('q3','c','wrong')">C) 3/5 + 1/3 = 14/15 km</button>
+      </div>
+      <div class="quiz-feedback" id="q3-feedback"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-q" id="q4">
+      <strong>Q4.</strong> A bag had <strong>4/7 kg</strong> of flour. Mum used <strong>3/4 of it</strong> for baking. How much flour was used?
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer('q4','a','wrong')">A) 4/7 − 3/4 = 16/28 − 21/28 = −5/28 kg (impossible!)</button>
+        <button class="quiz-opt" onclick="answer('q4','b','correct')">B) 3/4 × 4/7 = 12/28 = 3/7 kg ✓</button>
+        <button class="quiz-opt" onclick="answer('q4','c','wrong')">C) 3/4 kg (just take the fraction)</button>
+      </div>
+      <div class="quiz-feedback" id="q4-feedback"></div>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h2>🧠 The Golden Rule</h2>
+    <div class="memory-trick">
+      <div class="big">📖 Read carefully!</div>
+      <br>
+      <p><strong>Two separate amounts?</strong> → Add or Subtract them</p>
+      <p style="font-size:0.85rem; color:#555; margin:4px 0 14px;">e.g. "Tom has 3/5 km, Ben has 1/3 km → find difference"</p>
+      <p><strong>Fraction "of it" / "of the"?</strong> → Multiply first</p>
+      <p style="font-size:0.85rem; color:#555; margin:4px 0;">e.g. "gave away 1/3 of it" → 1/3 × (the amount)</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+const feedback = {
+  q1: {
+    correct: "✅ Correct! \"1/2 of it\" means 1/2 × 3/4 = 3/8 m. The word 'of' tells us to multiply!",
+    wrong:   "❌ Not quite. 'of it' means we multiply: 1/2 × 3/4 = 3/8 m. We don't subtract 1/2 as if it's a separate length."
+  },
+  q2: {
+    correct: "✅ Correct! 'of it' → multiply: 2/5 × 5/6 = 10/30 = 1/3 L. Notice the 5s cancel nicely!",
+    wrong:   "❌ Remember: 'of it' means multiply. 2/5 × 5/6 = 1/3 L is the amount poured out."
+  },
+  q3: {
+    correct: "✅ Correct! Here there is NO 'of it'. Both 3/5 km and 1/3 km are separate distances, so we subtract: 3/5 − 1/3 = 4/15 km.",
+    wrong:   "❌ Be careful — this question has NO 'of it'. Both values are separate amounts, so we subtract: 3/5 − 1/3 = 4/15 km."
+  },
+  q4: {
+    correct: "✅ Correct! 'of it' → multiply: 3/4 × 4/7 = 3/7 kg. Bonus: notice that option A gives a negative answer — impossible for flour!",
+    wrong:   "❌ Remember: '3/4 of it' means 3/4 × 4/7 = 3/7 kg. Option A (subtracting) actually gives a negative answer — a clue something is wrong!"
+  }
+};
+
+function answer(qid, opt, result) {
+  const opts = document.querySelectorAll(`#${qid} .quiz-opt`);
+  opts.forEach(o => {
+    o.disabled = true;
+    o.style.cursor = 'default';
+  });
+  // find the clicked button
+  const clicked = document.querySelector(`#${qid} .quiz-opt:nth-child(${opt === 'a' ? 1 : opt === 'b' ? 2 : 3})`);
+  clicked.classList.add(result);
+  const fb = document.getElementById(`${qid}-feedback`);
+  fb.textContent = feedback[qid][result];
+  fb.className = `quiz-feedback show ${result}`;
+}
+</script>
+</body>
+</html>
