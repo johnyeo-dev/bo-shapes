@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Concept 2: Grouping — PSLE Maths</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', sans-serif; background: #fff7ed; color: #1c1917; }
+
+header {
+  background: linear-gradient(135deg, #9a3412, #ea580c);
+  color: white;
+  padding: 28px 32px;
+  text-align: center;
+}
+header h1 { font-size: 2rem; font-weight: 800; letter-spacing: 1px; }
+header .subtitle { font-size: 0.95rem; opacity: 0.88; margin-top: 8px; }
+
+/* ── 4 Steps intro ── */
+.intro-wrap {
+  max-width: 920px;
+  margin: 28px auto 0;
+  padding: 0 16px;
+}
+.intro-wrap h2 {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #9a3412;
+  margin-bottom: 18px;
+  letter-spacing: 0.5px;
+}
+.four-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+@media(max-width:700px) { .four-steps { grid-template-columns: 1fr 1fr; } }
+@media(max-width:380px) { .four-steps { grid-template-columns: 1fr; } }
+
+.step-card {
+  background: white;
+  border-radius: 14px;
+  padding: 16px 13px 14px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,.09);
+  border-top: 4px solid #ea580c;
+}
+.step-card .snum {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: #ea580c; color: white;
+  font-weight: 800; font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+.step-card h3 { font-size: 0.88rem; font-weight: 700; color: #9a3412; margin-bottom: 6px; }
+.step-card p { font-size: 0.8rem; line-height: 1.55; color: #57534e; }
+.step-card .formula-hint {
+  display: inline-block;
+  margin-top: 6px;
+  background: #fff7ed;
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #ea580c;
+}
+
+/* ── Tab bar ── */
+.tab-bar {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 26px auto 20px;
+  max-width: 920px;
+  padding: 0 16px;
+  flex-wrap: wrap;
+}
+.tab-btn {
+  padding: 10px 22px;
+  border-radius: 24px;
+  border: 2px solid #ea580c;
+  background: white;
+  color: #ea580c;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+.tab-btn:hover, .tab-btn.active { background: #ea580c; color: white; }
+.tab-btn:focus { outline: 3px solid #ea580c; outline-offset: 2px; }
+
+/* ── Problem card ── */
+.problem-card { display: none; max-width: 960px; margin: 0 auto 44px; padding: 0 16px; }
+.problem-card.visible { display: block; }
+
+.card-inner {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 3px 16px rgba(0,0,0,.1);
+  overflow: hidden;
+}
+.card-header {
+  background: #ea580c;
+  color: white;
+  padding: 14px 24px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.concept-badge {
+  display: inline-block;
+  padding: 3px 11px; border-radius: 12px;
+  font-size: 0.72rem; font-weight: 700;
+  margin-left: 10px; vertical-align: middle;
+}
+.badge-standard { background: #fef3c7; color: #92400e; }
+.badge-type2    { background: #fce7f3; color: #9d174d; }
+.badge-least    { background: #dbeafe; color: #1e40af; }
+
+.card-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+@media(max-width:680px) { .card-body { grid-template-columns: 1fr; } }
+
+/* Figure panel */
+.fig-panel {
+  padding: 24px 20px;
+  display: flex; flex-direction: column; align-items: center;
+  background: #fff7ed;
+  border-right: 1px solid #fde8d8;
+}
+.fig-panel svg { max-width: 100%; }
+.fig-caption { font-size: 0.75rem; color: #a8a29e; margin-top: 10px; text-align: center; }
+
+/* Working panel */
+.work-panel { padding: 22px 22px 24px; }
+.problem-text {
+  background: #fff7ed;
+  border-left: 4px solid #ea580c;
+  padding: 11px 13px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  line-height: 1.75;
+  margin-bottom: 14px;
+}
+.concept-note {
+  border-radius: 8px;
+  padding: 9px 12px;
+  margin-bottom: 14px;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+.concept-note.type2  { background: #fce7f3; border-left: 4px solid #db2777; }
+.concept-note.least  { background: #dbeafe; border-left: 4px solid #1d4ed8; }
+
+.work-panel h3 {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #a8a29e;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+/* Step rows */
+.step-row {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 10px 12px; border-radius: 10px;
+  cursor: pointer; margin-bottom: 6px;
+  border: 2px solid transparent;
+  transition: background 0.18s, border-color 0.18s;
+}
+.step-row:hover  { background: #fff7ed; }
+.step-row.active { border-color: #ea580c; background: #fff7ed; }
+.step-row:focus  { outline: 3px solid #ea580c; outline-offset: 2px; }
+
+.srow-num {
+  min-width: 28px; height: 28px;
+  border-radius: 50%;
+  background: #fde8d8; color: #ea580c;
+  font-weight: 800; font-size: 0.85rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.step-row.active .srow-num { background: #ea580c; color: white; }
+
+.srow-text { font-size: 0.86rem; line-height: 1.65; }
+.srow-text .lbl   { font-weight: 700; color: #9a3412; }
+.srow-text .form  { font-family: 'Courier New', monospace; font-weight: 700; font-size: 0.9rem; }
+.srow-text .ok    { color: #16a34a; font-weight: 800; }
+.srow-text small  { color: #78716c; }
+
+.answer-box {
+  background: #dcfce7; border-left: 5px solid #16a34a;
+  padding: 10px 16px; border-radius: 8px;
+  margin-top: 14px; font-size: 0.95rem;
+  font-weight: 800; color: #15803d;
+}
+
+/* Buttons */
+.btn-row { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.btn {
+  padding: 8px 18px; border-radius: 20px; border: none;
+  cursor: pointer; font-size: 0.84rem; font-weight: 700;
+  transition: opacity 0.18s;
+}
+.btn:hover { opacity: 0.82; }
+.btn-play  { background: #ea580c; color: white; }
+.btn-reset { background: #fde8d8; color: #9a3412; }
+
+/* SVG shared */
+.ve { transition: opacity 0.38s; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Concept 2: Grouping</h1>
+  <div class="subtitle">Primary Maths P3–P6 &nbsp;|&nbsp; Learning Out of the Box</div>
+</header>
+
+<!-- ── 4 Steps overview ── -->
+<div class="intro-wrap">
+  <h2>4 Steps to Solve Any Grouping Question</h2>
+  <div class="four-steps">
+    <div class="step-card">
+      <div class="snum">1</div>
+      <h3>1 Group</h3>
+      <p>Identify what is in <strong>one group</strong> — the simplest combination of items.</p>
+    </div>
+    <div class="step-card">
+      <div class="snum">2</div>
+      <h3>Group Value</h3>
+      <p>Calculate the <strong>total value</strong> of one group by adding each item's value.</p>
+    </div>
+    <div class="step-card">
+      <div class="snum">3</div>
+      <h3>Number of Groups</h3>
+      <p>Divide: <strong>Total ÷ Group Value</strong></p>
+      <span class="formula-hint">= Number of Groups</span>
+    </div>
+    <div class="step-card">
+      <div class="snum">4</div>
+      <h3>Solve</h3>
+      <p>Use number of groups to find the <strong>specific item</strong> the question asks for.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── Tab bar ── -->
+<div class="tab-bar">
+  <button class="tab-btn active" data-tab="q1" tabindex="0">Q1 — Kim's Coins</button>
+  <button class="tab-btn" data-tab="q2" tabindex="0">Q2 — Lincoln's Notes</button>
+  <button class="tab-btn" data-tab="q3" tabindex="0">Q3 — Wholesaler's Boxes</button>
+  <button class="tab-btn" data-tab="q4" tabindex="0">Q4 — Jacky's Notes</button>
+  <button class="tab-btn" data-tab="q5" tabindex="0">Q5 — Cory's Chocolates</button>
+  <button class="tab-btn" data-tab="q6" tabindex="0">Q6 — Postman's Parcels</button>
+  <button class="tab-btn" data-tab="q7" tabindex="0">Q7 — Light Bulbs</button>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     QUESTION 1 — Kim's Coin Box
+     ══════════════════════════════════════════════ -->
+<div class="problem-card visible" id="q1">
+  <div class="card-inner">
+    <div class="card-header">
+      Question 1 — Kim's Coin Box
+      <span class="concept-badge badge-standard">Standard Grouping</span>
+    </div>
+    <div class="card-body">
+
+      <!-- SVG figure -->
+      <div class="fig-panel">
+        <svg id="svg1" viewBox="0 0 320 290" width="320" height="290">
+
+          <!-- ── Step 1: 1 group oval + coins ── -->
+          <text id="a-lbl" class="ve" x="160" y="18" text-anchor="middle"
+            font-size="12" font-weight="700" fill="#9a3412" opacity="0">1 Group</text>
+
+          <ellipse id="a-oval" class="ve" cx="160" cy="90" rx="128" ry="60"
+            fill="#fff7ed" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="7,4" opacity="0"/>
+
+          <!-- 3 × fifty-cent coins (gold) -->
+          <circle id="a-c1" class="ve" cx="72" cy="85" r="26"
+            fill="#fbbf24" stroke="#d97706" stroke-width="2" opacity="0"/>
+          <text id="a-t1" class="ve" x="72" y="91" text-anchor="middle"
+            font-size="11" font-weight="800" fill="#78350f" opacity="0">50¢</text>
+
+          <circle id="a-c2" class="ve" cx="140" cy="75" r="26"
+            fill="#fbbf24" stroke="#d97706" stroke-width="2" opacity="0"/>
+          <text id="a-t2" class="ve" x="140" y="81" text-anchor="middle"
+            font-size="11" font-weight="800" fill="#78350f" opacity="0">50¢</text>
+
+          <circle id="a-c3" class="ve" cx="208" cy="85" r="26"
+            fill="#fbbf24" stroke="#d97706" stroke-width="2" opacity="0"/>
+          <text id="a-t3" class="ve" x="208" y="91" text-anchor="middle"
+            font-size="11" font-weight="800" fill="#78350f" opacity="0">50¢</text>
+
+          <!-- 1 × twenty-cent coin (blue) -->
+          <circle id="a-c4" class="ve" cx="268" cy="90" r="22"
+            fill="#93c5fd" stroke="#2563eb" stroke-width="2" opacity="0"/>
+          <text id="a-t4" class="ve" x="268" y="96" text-anchor="middle"
+            font-size="10" font-weight="800" fill="#1e3a8a" opacity="0">20¢</text>
+
+          <!-- ── Step 2: group value calculation ── -->
+          <line id="a-line" class="ve" x1="32" y1="163" x2="288" y2="163"
+            stroke="#fde8d8" stroke-width="1.5" opacity="0"/>
+          <text id="a-gv1" class="ve" x="160" y="180" text-anchor="middle"
+            font-size="12" fill="#1c1917" opacity="0">3 × $0.50 + 1 × $0.20</text>
+          <text id="a-gv2" class="ve" x="160" y="200" text-anchor="middle"
+            font-size="14" font-weight="800" fill="#ea580c" opacity="0">= $1.70 per group</text>
+
+          <!-- ── Step 3: number of groups ── -->
+          <text id="a-ng1" class="ve" x="160" y="226" text-anchor="middle"
+            font-size="12" fill="#1c1917" opacity="0">$20.40 ÷ $1.70</text>
+          <text id="a-ng2" class="ve" x="160" y="248" text-anchor="middle"
+            font-size="14" font-weight="800" fill="#ea580c" opacity="0">= 12 groups</text>
+
+          <!-- ── Step 4: answer ── -->
+          <rect id="a-ab" class="ve" x="36" y="260" width="248" height="26"
+            rx="7" fill="#dcfce7" opacity="0"/>
+          <text id="a-at" class="ve" x="160" y="278" text-anchor="middle"
+            font-size="12" font-weight="800" fill="#15803d" opacity="0">12 × 1 = 12 twenty-cent coins ✓</text>
+        </svg>
+        <div class="fig-caption">Click each step below to see it light up here</div>
+      </div>
+
+      <!-- Working panel -->
+      <div class="work-panel">
+        <div class="problem-text">
+          Kim has savings of <strong>$20.40</strong> in her coin box. All coins are
+          <strong>fifty-cent</strong> and <strong>twenty-cent</strong> coins.
+          There are <strong>3 times as many 50¢ coins</strong> as 20¢ coins.
+          Find the number of twenty-cent coins.
+        </div>
+
+        <h3>Step-by-step working</h3>
+
+        <div class="step-row" tabindex="0" data-q="q1"
+          data-show="a-lbl,a-oval,a-c1,a-t1,a-c2,a-t2,a-c3,a-t3,a-c4,a-t4">
+          <div class="srow-num">1</div>
+          <div class="srow-text">
+            <span class="lbl">1 Group</span><br>
+            3 fifty-cent coins &amp; 1 twenty-cent coin<br>
+            <small>(ratio 3 : 1 → simplest group)</small>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q1"
+          data-show="a-lbl,a-oval,a-c1,a-t1,a-c2,a-t2,a-c3,a-t3,a-c4,a-t4,a-line,a-gv1,a-gv2">
+          <div class="srow-num">2</div>
+          <div class="srow-text">
+            <span class="lbl">Group Value</span><br>
+            <span class="form">3 × $0.50 = $1.50</span><br>
+            <span class="form">1 × $0.20 = $0.20</span><br>
+            <span class="form">$1.50 + $0.20 = <span class="ok">$1.70</span></span>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q1"
+          data-show="a-gv1,a-gv2,a-ng1,a-ng2">
+          <div class="srow-num">3</div>
+          <div class="srow-text">
+            <span class="lbl">Number of Groups</span><br>
+            <span class="form">= $20.40 ÷ $1.70</span><br>
+            <span class="ok">= 12 groups</span>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q1"
+          data-show="a-ng1,a-ng2,a-ab,a-at">
+          <div class="srow-num">4</div>
+          <div class="srow-text">
+            <span class="lbl">Solve</span><br>
+            Each group contains <strong>1</strong> twenty-cent coin<br>
+            <span class="form">= 12 × 1 = <span class="ok">12</span></span>
+          </div>
+        </div>
+
+        <div class="answer-box">Number of twenty-cent coins = <strong>12</strong></div>
+
+        <div class="btn-row">
+          <button class="btn btn-play" data-q="q1">▶ Animate</button>
+          <button class="btn btn-reset" data-q="q1">↺ Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     QUESTION 2 — Lincoln's Notes  (Type 2)
+     ══════════════════════════════════════════════ -->
+<div class="problem-card" id="q2">
+  <div class="card-inner">
+    <div class="card-header">
+      Question 2 — Lincoln's Notes
+    </div>
+    <div class="card-body">
+
+      <!-- SVG figure -->
+      <div class="fig-panel">
+        <svg id="svg2" viewBox="0 0 320 310" width="320" height="310">
+
+          <!-- Total bubble -->
+          <ellipse id="b-tot-bg" class="ve" cx="160" cy="22" rx="46" ry="16"
+            fill="#fde8d8" stroke="#ea580c" stroke-width="1.5" opacity="0"/>
+          <text id="b-tot" class="ve" x="160" y="27" text-anchor="middle"
+            font-size="12" font-weight="800" fill="#9a3412" opacity="0">$165</text>
+
+          <!-- ── Step 1: 5 extra notes ── -->
+          <!-- bracket / arrow label -->
+          <text id="b-ex-lbl" class="ve" x="160" y="52" text-anchor="middle"
+            font-size="10" font-weight="700" fill="#9d174d" opacity="0">5 extra $5 notes = 5 × $5 = $25</text>
+
+          <!-- 5 green note boxes -->
+          <rect id="b-e1" class="ve" x="22"  y="60" width="38" height="24" rx="5"
+            fill="#4ade80" stroke="#16a34a" stroke-width="1.5" opacity="0"/>
+          <text id="b-et1" class="ve" x="41" y="77" text-anchor="middle"
+            font-size="11" font-weight="700" fill="#14532d" opacity="0">$5</text>
+
+          <rect id="b-e2" class="ve" x="66"  y="60" width="38" height="24" rx="5"
+            fill="#4ade80" stroke="#16a34a" stroke-width="1.5" opacity="0"/>
+          <text id="b-et2" class="ve" x="85" y="77" text-anchor="middle"
+            font-size="11" font-weight="700" fill="#14532d" opacity="0">$5</text>
+
+          <rect id="b-e3" class="ve" x="110" y="60" width="38" height="24" rx="5"
+            fill="#4ade80" stroke="#16a34a" stroke-width="1.5" opacity="0"/>
+          <text id="b-et3" class="ve" x="129" y="77" text-anchor="middle"
+            font-size="11" font-weight="700" fill="#14532d" opacity="0">$5</text>
+
+          <rect id="b-e4" class="ve" x="154" y="60" width="38" height="24" rx="5"
+            fill="#4ade80" stroke="#16a34a" stroke-width="1.5" opacity="0"/>
+          <text id="b-et4" class="ve" x="173" y="77" text-anchor="middle"
+            font-size="11" font-weight="700" fill="#14532d" opacity="0">$5</text>
+
+          <rect id="b-e5" class="ve" x="198" y="60" width="38" height="24" rx="5"
+            fill="#4ade80" stroke="#16a34a" stroke-width="1.5" opacity="0"/>
+          <text id="b-et5" class="ve" x="217" y="77" text-anchor="middle"
+            font-size="11" font-weight="700" fill="#14532d" opacity="0">$5</text>
+
+          <!-- bracket around extra notes -->
+          <path id="b-brace" class="ve"
+            d="M 18,56 L 18,90 L 240,90 L 240,56"
+            fill="none" stroke="#db2777" stroke-width="1.5" stroke-dasharray="4,3" opacity="0"/>
+          <text id="b-brace-lbl" class="ve" x="129" y="104" text-anchor="middle"
+            font-size="10" fill="#9d174d" opacity="0">Set aside $25</text>
+
+          <!-- remainder -->
+          <text id="b-rem" class="ve" x="160" y="122" text-anchor="middle"
+            font-size="12" fill="#1c1917" opacity="0">$165 − $25 =
+            <tspan font-weight="800" fill="#ea580c"> $140 remaining</tspan></text>
+
+          <!-- ── Step 2: 1 group oval ── -->
+          <text id="b-glbl" class="ve" x="160" y="145" text-anchor="middle"
+            font-size="12" font-weight="700" fill="#9a3412" opacity="0">1 Group</text>
+
+          <ellipse id="b-oval" class="ve" cx="160" cy="172" rx="88" ry="28"
+            fill="#fff7ed" stroke="#ea580c" stroke-width="2" stroke-dasharray="6,3" opacity="0"/>
+
+          <!-- $5 note (green) + $2 note (pink) side by side -->
+          <rect id="b-g5" class="ve" x="102" y="157" width="48" height="30" rx="6"
+            fill="#4ade80" stroke="#16a34a" stroke-width="1.5" opacity="0"/>
+          <text id="b-g5t" class="ve" x="126" y="177" text-anchor="middle"
+            font-size="14" font-weight="800" fill="#14532d" opacity="0">$5</text>
+
+          <rect id="b-g2" class="ve" x="158" y="157" width="48" height="30" rx="6"
+            fill="#f9a8d4" stroke="#db2777" stroke-width="1.5" opacity="0"/>
+          <text id="b-g2t" class="ve" x="182" y="177" text-anchor="middle"
+            font-size="14" font-weight="800" fill="#9d174d" opacity="0">$2</text>
+
+          <!-- ── Step 3: group value ── -->
+          <text id="b-gv" class="ve" x="160" y="218" text-anchor="middle"
+            font-size="12" fill="#1c1917" opacity="0">$5 + $2 =
+            <tspan font-weight="800" fill="#ea580c"> $7 per group</tspan></text>
+
+          <!-- ── Step 4: number of groups ── -->
+          <text id="b-ng" class="ve" x="160" y="243" text-anchor="middle"
+            font-size="12" fill="#1c1917" opacity="0">$140 ÷ $7 =
+            <tspan font-weight="800" fill="#ea580c"> 20 groups</tspan></text>
+
+          <!-- ── Step 5: solve ── -->
+          <text id="b-sv" class="ve" x="160" y="268" text-anchor="middle"
+            font-size="12" fill="#1c1917" opacity="0">$5 notes from groups: 20 × 1 = 20</text>
+          <text id="b-sv2" class="ve" x="160" y="285" text-anchor="middle"
+            font-size="12" fill="#1c1917" opacity="0">Add back extra: 20 + 5 =
+            <tspan font-weight="800" fill="#ea580c"> 25</tspan></text>
+
+          <rect id="b-ab" class="ve" x="60" y="293" width="200" height="14"
+            rx="4" fill="#dcfce7" opacity="0"/>
+          <text id="b-at" class="ve" x="160" y="305" text-anchor="middle"
+            font-size="11" font-weight="800" fill="#15803d" opacity="0">$5 notes = 25 ✓</text>
+        </svg>
+        <div class="fig-caption">Click each step below to build the solution</div>
+      </div>
+
+      <!-- Working panel -->
+      <div class="work-panel">
+        <div class="problem-text">
+          Lincoln has <strong>$165</strong> worth of <strong>$5 notes</strong> and
+          <strong>$2 notes</strong>. He has <strong>five more $5 notes</strong>
+          than $2 notes. How many <strong>$5 notes</strong> does Lincoln have?
+        </div>
+
+        <div class="concept-note type2">
+          <strong style="color:#9d174d">Type 2 (Guess &amp; Check):</strong><br>
+          When there is a difference ("5 more"), first remove the extra amount to make
+          equal groups, then group normally.
+        </div>
+
+        <h3>Step-by-step working</h3>
+
+        <div class="step-row" tabindex="0" data-q="q2"
+          data-show="b-tot-bg,b-tot,b-ex-lbl,b-e1,b-et1,b-e2,b-et2,b-e3,b-et3,b-e4,b-et4,b-e5,b-et5,b-brace,b-brace-lbl,b-rem">
+          <div class="srow-num">1</div>
+          <div class="srow-text">
+            <span class="lbl">Handle the difference first</span><br>
+            5 extra $5 notes = 5 × $5 = <strong>$25</strong><br>
+            <span class="form">$165 − $25 = <span class="ok">$140</span> remaining</span>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q2"
+          data-show="b-rem,b-glbl,b-oval,b-g5,b-g5t,b-g2,b-g2t">
+          <div class="srow-num">2</div>
+          <div class="srow-text">
+            <span class="lbl">1 Group</span><br>
+            1 five-dollar note + 1 two-dollar note<br>
+            <small>(now equal numbers → 1 : 1 ratio)</small>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q2"
+          data-show="b-oval,b-g5,b-g5t,b-g2,b-g2t,b-gv">
+          <div class="srow-num">3</div>
+          <div class="srow-text">
+            <span class="lbl">Group Value</span><br>
+            <span class="form">$5 + $2 = <span class="ok">$7</span></span>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q2"
+          data-show="b-gv,b-ng">
+          <div class="srow-num">4</div>
+          <div class="srow-text">
+            <span class="lbl">Number of Groups</span><br>
+            <span class="form">= $140 ÷ $7</span><br>
+            <span class="ok">= 20 groups</span>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q2"
+          data-show="b-ng,b-sv,b-sv2,b-ab,b-at">
+          <div class="srow-num">5</div>
+          <div class="srow-text">
+            <span class="lbl">Solve</span><br>
+            <span class="form">$5 notes from groups = 20 × 1 = 20</span><br>
+            <span class="form">Add back 5 extra: 20 + 5 = <span class="ok">25</span></span>
+          </div>
+        </div>
+
+        <div class="answer-box">Number of $5 notes = <strong>25</strong></div>
+
+        <div class="btn-row">
+          <button class="btn btn-play" data-q="q2">▶ Animate</button>
+          <button class="btn btn-reset" data-q="q2">↺ Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     QUESTION 3 — Wholesaler's Boxes  (Least Number)
+     ══════════════════════════════════════════════ -->
+<div class="problem-card" id="q3">
+  <div class="card-inner">
+    <div class="card-header">
+      Question 3 — Wholesaler's Boxes
+      <span class="concept-badge badge-least">Least Number</span>
+    </div>
+    <div class="card-body">
+
+      <!-- SVG figure -->
+      <div class="fig-panel">
+        <svg id="svg3" viewBox="0 0 320 300" width="320" height="300">
+
+          <!-- Total files label -->
+          <text id="c-tot" class="ve" x="160" y="20" text-anchor="middle"
+            font-size="13" font-weight="700" fill="#1c1917" opacity="0">6500 plastic files</text>
+
+          <!-- ── Step 1: 1 box = 30 files ── -->
+          <!-- Sample box (full) -->
+          <rect id="c-b1" class="ve" x="20" y="32" width="62" height="50" rx="6"
+            fill="#bfdbfe" stroke="#1d4ed8" stroke-width="2" opacity="0"/>
+          <!-- lid -->
+          <rect id="c-b1l" class="ve" x="20" y="30" width="62" height="10" rx="3"
+            fill="#93c5fd" stroke="#1d4ed8" stroke-width="2" opacity="0"/>
+          <text id="c-b1t" class="ve" x="51" y="54" text-anchor="middle"
+            font-size="9" font-weight="700" fill="#1e40af" opacity="0">30 files</text>
+          <text id="c-b1t2" class="ve" x="51" y="68" text-anchor="middle"
+            font-size="9" fill="#1e40af" opacity="0">= 1 box</text>
+
+          <!-- "× 216" label -->
+          <text id="c-mult" class="ve" x="51" y="92" text-anchor="middle"
+            font-size="10" fill="#1e40af" font-weight="700" opacity="0">×216</text>
+
+          <!-- Dots -->
+          <text id="c-dots" class="ve" x="136" y="67" text-anchor="middle"
+            font-size="26" fill="#94a3b8" opacity="0">· · ·</text>
+
+          <!-- Box 216 (last full) -->
+          <rect id="c-b216" class="ve" x="180" y="32" width="62" height="50" rx="6"
+            fill="#bfdbfe" stroke="#1d4ed8" stroke-width="2" opacity="0"/>
+          <rect id="c-b216l" class="ve" x="180" y="30" width="62" height="10" rx="3"
+            fill="#93c5fd" stroke="#1d4ed8" stroke-width="2" opacity="0"/>
+          <text id="c-b216t" class="ve" x="211" y="54" text-anchor="middle"
+            font-size="9" font-weight="700" fill="#1e40af" opacity="0">30 files</text>
+          <text id="c-b216t2" class="ve" x="211" y="68" text-anchor="middle"
+            font-size="9" fill="#1e40af" opacity="0">box 216</text>
+
+          <!-- ── Step 2: division ── -->
+          <line id="c-div-line" class="ve" x1="20" y1="108" x2="300" y2="108"
+            stroke="#fde8d8" stroke-width="1.5" opacity="0"/>
+          <text id="c-div1" class="ve" x="160" y="126" text-anchor="middle"
+            font-size="13" fill="#1c1917" opacity="0">6500 ÷ 30</text>
+          <text id="c-div2" class="ve" x="160" y="148" text-anchor="middle"
+            font-size="14" font-weight="800" fill="#ea580c" opacity="0">= 216 remainder 2</text>
+
+          <!-- ── Step 3: remainder box + explanation ── -->
+          <!-- Remainder box (orange dashed) -->
+          <rect id="c-rb" class="ve" x="256" y="32" width="56" height="50" rx="6"
+            fill="#fed7aa" stroke="#ea580c" stroke-width="2" stroke-dasharray="5,3" opacity="0"/>
+          <rect id="c-rbl" class="ve" x="256" y="30" width="56" height="10" rx="3"
+            fill="#fdba74" stroke="#ea580c" stroke-width="2" stroke-dasharray="5,3" opacity="0"/>
+          <text id="c-rbt" class="ve" x="284" y="51" text-anchor="middle"
+            font-size="9" font-weight="700" fill="#9a3412" opacity="0">2 files</text>
+          <text id="c-rbt2" class="ve" x="284" y="65" text-anchor="middle"
+            font-size="9" fill="#9a3412" opacity="0">extra!</text>
+          <text id="c-rbt3" class="ve" x="284" y="82" text-anchor="middle"
+            font-size="10" font-weight="800" fill="#ea580c" opacity="0">+1 box</text>
+
+          <!-- Explanation panel -->
+          <rect id="c-exp-bg" class="ve" x="20" y="162" width="280" height="78" rx="10"
+            fill="#fff7ed" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="5,3" opacity="0"/>
+
+          <text id="c-exp1" class="ve" x="160" y="183" text-anchor="middle"
+            font-size="11" fill="#57534e" opacity="0">216 full boxes → 216 × 30 = 6480 files</text>
+          <text id="c-exp2" class="ve" x="160" y="201" text-anchor="middle"
+            font-size="11" fill="#57534e" opacity="0">2 leftover files still need a box</text>
+          <text id="c-exp3" class="ve" x="160" y="221" text-anchor="middle"
+            font-size="12" font-weight="800" fill="#ea580c" opacity="0">216 + 1 = 217 boxes total</text>
+
+          <!-- ── Step 4: answer ── -->
+          <rect id="c-ab" class="ve" x="36" y="252" width="248" height="30"
+            rx="8" fill="#dcfce7" opacity="0"/>
+          <text id="c-at" class="ve" x="160" y="272" text-anchor="middle"
+            font-size="13" font-weight="800" fill="#15803d" opacity="0">Least boxes = 217 ✓</text>
+        </svg>
+        <div class="fig-caption">Click each step below to build the solution</div>
+      </div>
+
+      <!-- Working panel -->
+      <div class="work-panel">
+        <div class="problem-text">
+          A wholesaler receives a shipment of <strong>6500</strong> plastic files.
+          He wants to pack them into boxes. Each box can contain
+          <strong>30 files</strong>. What is the <strong>least number of boxes</strong>
+          that he needs to pack <em>all</em> the files?
+        </div>
+
+        <div class="concept-note least">
+          <strong style="color:#1e40af">Least Number concept:</strong><br>
+          To use the <em>fewest</em> boxes, fill each box to its
+          <em>maximum</em> first. Any leftover files still need one more box —
+          even if it's not full.
+        </div>
+
+        <h3>Step-by-step working</h3>
+
+        <div class="step-row" tabindex="0" data-q="q3"
+          data-show="c-tot,c-b1,c-b1l,c-b1t,c-b1t2,c-mult,c-dots,c-b216,c-b216l,c-b216t,c-b216t2">
+          <div class="srow-num">1</div>
+          <div class="srow-text">
+            <span class="lbl">1 Group = 1 Box</span><br>
+            Each box holds a maximum of <strong>30 files</strong>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q3"
+          data-show="c-tot,c-b1,c-b1l,c-b1t,c-b1t2,c-mult,c-dots,c-b216,c-b216l,c-b216t,c-b216t2,c-div-line,c-div1,c-div2">
+          <div class="srow-num">2</div>
+          <div class="srow-text">
+            <span class="lbl">Number of Groups</span><br>
+            <span class="form">= 6500 ÷ 30</span><br>
+            <span class="ok">= 216 remainder 2</span>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q3"
+          data-show="c-div1,c-div2,c-rb,c-rbl,c-rbt,c-rbt2,c-rbt3,c-exp-bg,c-exp1,c-exp2,c-exp3">
+          <div class="srow-num">3</div>
+          <div class="srow-text">
+            <span class="lbl">Handle the remainder</span><br>
+            216 full boxes + <strong>2 leftover files</strong><br>
+            The 2 files still need <strong>1 more box</strong><br>
+            <span class="form">216 + 1 = <span class="ok">217</span></span>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q3"
+          data-show="c-exp3,c-ab,c-at">
+          <div class="srow-num">4</div>
+          <div class="srow-text">
+            <span class="lbl">Solve — Least boxes needed</span><br>
+            <span class="form">= 216 + 1 = <span class="ok">217</span></span>
+          </div>
+        </div>
+
+        <div class="answer-box">Least number of boxes = <strong>217</strong></div>
+
+        <div class="btn-row">
+          <button class="btn btn-play" data-q="q3">▶ Animate</button>
+          <button class="btn btn-reset" data-q="q3">↺ Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     QUESTION 4 — Jacky's Notes (Ratio grouping)
+     ══════════════════════════════════════════════ -->
+<div class="problem-card" id="q4">
+  <div class="card-inner">
+    <div class="card-header">Question 4 — Jacky's Notes</div>
+    <div class="card-body">
+
+      <div class="fig-panel">
+        <svg id="svg4" viewBox="0 0 320 280" width="320" height="280">
+
+          <!-- Step 1: 1 group oval + notes -->
+          <text id="d-lbl" class="ve" x="160" y="18" text-anchor="middle"
+            font-size="12" font-weight="700" fill="#9a3412" opacity="0">1 Group (ratio 2 : 1 : 5)</text>
+          <ellipse id="d-oval" class="ve" cx="160" cy="95" rx="138" ry="65"
+            fill="#fff7ed" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="7,4" opacity="0"/>
+
+          <!-- 2× $10 notes (purple) -->
+          <rect id="d-n10a" class="ve" x="22" y="68" width="44" height="28" rx="5"
+            fill="#c4b5fd" stroke="#7c3aed" stroke-width="1.5" opacity="0"/>
+          <text id="d-t10a" class="ve" x="44" y="87" text-anchor="middle"
+            font-size="12" font-weight="800" fill="#4c1d95" opacity="0">$10</text>
+
+          <rect id="d-n10b" class="ve" x="70" y="68" width="44" height="28" rx="5"
+            fill="#c4b5fd" stroke="#7c3aed" stroke-width="1.5" opacity="0"/>
+          <text id="d-t10b" class="ve" x="92" y="87" text-anchor="middle"
+            font-size="12" font-weight="800" fill="#4c1d95" opacity="0">$10</text>
+
+          <!-- 1× $5 note (green) -->
+          <rect id="d-n5" class="ve" x="122" y="68" width="44" height="28" rx="5"
+            fill="#4ade80" stroke="#16a34a" stroke-width="1.5" opacity="0"/>
+          <text id="d-t5" class="ve" x="144" y="87" text-anchor="middle"
+            font-size="12" font-weight="800" fill="#14532d" opacity="0">$5</text>
+
+          <!-- 5× $2 notes (pink) — row of 5 small -->
+          <rect id="d-n2a" class="ve" x="172" y="68" width="28" height="28" rx="4"
+            fill="#f9a8d4" stroke="#db2777" stroke-width="1.5" opacity="0"/>
+          <text id="d-t2a" class="ve" x="186" y="87" text-anchor="middle"
+            font-size="10" font-weight="800" fill="#9d174d" opacity="0">$2</text>
+
+          <rect id="d-n2b" class="ve" x="204" y="68" width="28" height="28" rx="4"
+            fill="#f9a8d4" stroke="#db2777" stroke-width="1.5" opacity="0"/>
+          <text id="d-t2b" class="ve" x="218" y="87" text-anchor="middle"
+            font-size="10" font-weight="800" fill="#9d174d" opacity="0">$2</text>
+
+          <rect id="d-n2c" class="ve" x="236" y="68" width="28" height="28" rx="4"
+            fill="#f9a8d4" stroke="#db2777" stroke-width="1.5" opacity="0"/>
+          <text id="d-t2c" class="ve" x="250" y="87" text-anchor="middle"
+            font-size="10" font-weight="800" fill="#9d174d" opacity="0">$2</text>
+
+          <rect id="d-n2d" class="ve" x="172" y="100" width="28" height="28" rx="4"
+            fill="#f9a8d4" stroke="#db2777" stroke-width="1.5" opacity="0"/>
+          <text id="d-t2d" class="ve" x="186" y="119" text-anchor="middle"
+            font-size="10" font-weight="800" fill="#9d174d" opacity="0">$2</text>
+
+          <rect id="d-n2e" class="ve" x="204" y="100" width="28" height="28" rx="4"
+            fill="#f9a8d4" stroke="#db2777" stroke-width="1.5" opacity="0"/>
+          <text id="d-t2e" class="ve" x="218" y="119" text-anchor="middle"
+            font-size="10" font-weight="800" fill="#9d174d" opacity="0">$2</text>
+
+          <!-- Step 2: group value -->
+          <text id="d-gv1" class="ve" x="160" y="178" text-anchor="middle"
+            font-size="11" fill="#1c1917" opacity="0">(2×$10) + (1×$5) + (5×$2)</text>
+          <text id="d-gv2" class="ve" x="160" y="196" text-anchor="middle"
+            font-size="11" fill="#1c1917" opacity="0">= $20 + $5 + $10</text>
+          <text id="d-gv3" class="ve" x="160" y="214" text-anchor="middle"
+            font-size="14" font-weight="800" fill="#ea580c" opacity="0">= $35 per group</text>
+
+          <!-- Step 3: number of groups -->
+          <text id="d-ng1" class="ve" x="160" y="236" text-anchor="middle"
+            font-size="12" fill="#1c1917" opacity="0">$560 ÷ $35 =
+            <tspan font-weight="800" fill="#ea580c"> 16 groups</tspan></text>
+
+          <!-- Step 4: answer -->
+          <rect id="d-ab" class="ve" x="36" y="248" width="248" height="26"
+            rx="7" fill="#dcfce7" opacity="0"/>
+          <text id="d-at" class="ve" x="160" y="265" text-anchor="middle"
+            font-size="12" font-weight="800" fill="#15803d" opacity="0">16 × 5 = 80 two-dollar notes ✓</text>
+        </svg>
+        <div class="fig-caption">Click each step below to see it light up here</div>
+      </div>
+
+      <div class="work-panel">
+        <div class="problem-text">
+          Jacky has a number of <strong>$10</strong>, <strong>$5</strong> and <strong>$2</strong>
+          notes in the ratio <strong>2 : 1 : 5</strong>. The total value of all the dollar notes is
+          <strong>$560</strong>. How many <strong>$2 notes</strong> does Jacky have?
+        </div>
+        <h3>Step-by-step working</h3>
+
+        <div class="step-row" tabindex="0" data-q="q4"
+          data-show="d-lbl,d-oval,d-n10a,d-t10a,d-n10b,d-t10b,d-n5,d-t5,d-n2a,d-t2a,d-n2b,d-t2b,d-n2c,d-t2c,d-n2d,d-t2d,d-n2e,d-t2e">
+          <div class="srow-num">1</div>
+          <div class="srow-text">
+            <span class="lbl">1 Group</span><br>
+            2 × $10 notes, 1 × $5 note, 5 × $2 notes<br>
+            <small>(ratio 2 : 1 : 5 → simplest group)</small>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q4"
+          data-show="d-oval,d-n10a,d-t10a,d-n10b,d-t10b,d-n5,d-t5,d-n2a,d-t2a,d-n2b,d-t2b,d-n2c,d-t2c,d-n2d,d-t2d,d-n2e,d-t2e,d-gv1,d-gv2,d-gv3">
+          <div class="srow-num">2</div>
+          <div class="srow-text">
+            <span class="lbl">Group Value</span><br>
+            <span class="form">2×$10 + 1×$5 + 5×$2</span><br>
+            <span class="form">= $20 + $5 + $10 = <span class="ok">$35</span></span>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q4"
+          data-show="d-gv3,d-ng1">
+          <div class="srow-num">3</div>
+          <div class="srow-text">
+            <span class="lbl">Number of Groups</span><br>
+            <span class="form">= $560 ÷ $35</span><br>
+            <span class="ok">= 16 groups</span>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q4"
+          data-show="d-ng1,d-ab,d-at">
+          <div class="srow-num">4</div>
+          <div class="srow-text">
+            <span class="lbl">Solve</span><br>
+            Each group has <strong>5</strong> two-dollar notes<br>
+            <span class="form">= 16 × 5 = <span class="ok">80</span></span>
+          </div>
+        </div>
+
+        <div class="answer-box">Number of $2 notes = <strong>80</strong></div>
+        <div class="btn-row">
+          <button class="btn btn-play" data-q="q4">▶ Animate</button>
+          <button class="btn btn-reset" data-q="q4">↺ Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     QUESTION 5 — Cory's Chocolates (Buy 3 Get 1 Free)
+     ══════════════════════════════════════════════ -->
+<div class="problem-card" id="q5">
+  <div class="card-inner">
+    <div class="card-header">Question 5 — Cory's Chocolates</div>
+    <div class="card-body">
+
+      <div class="fig-panel">
+        <svg id="svg5" viewBox="0 0 320 300" width="320" height="300">
+
+          <!-- Step 1: 1 group oval (3 bought + 1 free) -->
+          <text id="e-lbl" class="ve" x="160" y="18" text-anchor="middle"
+            font-size="12" font-weight="700" fill="#9a3412" opacity="0">1 Group = 4 chocolates</text>
+          <ellipse id="e-oval" class="ve" cx="160" cy="90" rx="130" ry="55"
+            fill="#fff7ed" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="7,4" opacity="0"/>
+
+          <!-- 3 paid chocs (brown) -->
+          <circle id="e-c1" class="ve" cx="74"  cy="88" r="24" fill="#92400e" stroke="#78350f" stroke-width="2" opacity="0"/>
+          <text id="e-ct1" class="ve" x="74"  y="93" text-anchor="middle" font-size="9" fill="white" font-weight="700" opacity="0">PAID</text>
+          <circle id="e-c2" class="ve" cx="130" cy="80" r="24" fill="#92400e" stroke="#78350f" stroke-width="2" opacity="0"/>
+          <text id="e-ct2" class="ve" x="130" y="85" text-anchor="middle" font-size="9" fill="white" font-weight="700" opacity="0">PAID</text>
+          <circle id="e-c3" class="ve" cx="186" cy="88" r="24" fill="#92400e" stroke="#78350f" stroke-width="2" opacity="0"/>
+          <text id="e-ct3" class="ve" x="186" y="93" text-anchor="middle" font-size="9" fill="white" font-weight="700" opacity="0">PAID</text>
+
+          <!-- 1 free choc (light) -->
+          <circle id="e-cf" class="ve" cx="246" cy="90" r="24" fill="#d1fae5" stroke="#059669" stroke-width="2" stroke-dasharray="5,3" opacity="0"/>
+          <text id="e-ctf" class="ve" x="246" y="86" text-anchor="middle" font-size="9" fill="#065f46" font-weight="700" opacity="0">FREE</text>
+          <text id="e-ctf2" class="ve" x="246" y="98" text-anchor="middle" font-size="8" fill="#065f46" opacity="0">no cost</text>
+
+          <!-- Step 2: group value -->
+          <text id="e-gv1" class="ve" x="160" y="162" text-anchor="middle"
+            font-size="12" fill="#1c1917" opacity="0">Pay only for 3: 3 × $2</text>
+          <text id="e-gv2" class="ve" x="160" y="180" text-anchor="middle"
+            font-size="14" font-weight="800" fill="#ea580c" opacity="0">= $6 per group</text>
+
+          <!-- Step 3: # groups with remainder -->
+          <text id="e-ng1" class="ve" x="160" y="202" text-anchor="middle"
+            font-size="12" fill="#1c1917" opacity="0">58 ÷ 4 =
+            <tspan font-weight="800" fill="#ea580c"> 14 remainder 2</tspan></text>
+
+          <!-- Step 4: solve -->
+          <text id="e-sv1" class="ve" x="160" y="224" text-anchor="middle"
+            font-size="11" fill="#1c1917" opacity="0">14 full groups: 14 × $6 = $84</text>
+          <text id="e-sv2" class="ve" x="160" y="242" text-anchor="middle"
+            font-size="11" fill="#1c1917" opacity="0">2 extra (bought): 2 × $2 = $4</text>
+          <text id="e-sv3" class="ve" x="160" y="260" text-anchor="middle"
+            font-size="13" font-weight="800" fill="#ea580c" opacity="0">Total = $84 + $4 = $88</text>
+
+          <rect id="e-ab" class="ve" x="60" y="272" width="200" height="24"
+            rx="7" fill="#dcfce7" opacity="0"/>
+          <text id="e-at" class="ve" x="160" y="288" text-anchor="middle"
+            font-size="12" font-weight="800" fill="#15803d" opacity="0">Cory paid $88 ✓</text>
+        </svg>
+        <div class="fig-caption">Click each step below to build the solution</div>
+      </div>
+
+      <div class="work-panel">
+        <div class="problem-text">
+          Cory bought <strong>58 chocolates</strong>. For every <strong>3 chocolates</strong>
+          he buys, he gets <strong>one more for free</strong>. If each chocolate costs
+          <strong>$2</strong>, how much did Cory pay?
+        </div>
+        <div class="concept-note" style="background:#fef3c7;border-left:4px solid #d97706;color:#92400e;">
+          <strong>Key idea:</strong> 1 group = 3 bought + 1 free = 4 chocolates total,
+          but you only <em>pay</em> for 3. Handle the remainder carefully — leftover
+          chocolates were bought (no free deal).
+        </div>
+        <h3>Step-by-step working</h3>
+
+        <div class="step-row" tabindex="0" data-q="q5"
+          data-show="e-lbl,e-oval,e-c1,e-ct1,e-c2,e-ct2,e-c3,e-ct3,e-cf,e-ctf,e-ctf2">
+          <div class="srow-num">1</div>
+          <div class="srow-text">
+            <span class="lbl">1 Group</span><br>
+            3 paid + 1 free = <strong>4 chocolates</strong><br>
+            <small>(smallest repeating unit)</small>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q5"
+          data-show="e-oval,e-c1,e-ct1,e-c2,e-ct2,e-c3,e-ct3,e-cf,e-ctf,e-ctf2,e-gv1,e-gv2">
+          <div class="srow-num">2</div>
+          <div class="srow-text">
+            <span class="lbl">Group Value</span><br>
+            Only 3 paid chocolates cost money<br>
+            <span class="form">3 × $2 = <span class="ok">$6</span></span>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q5"
+          data-show="e-gv2,e-ng1">
+          <div class="srow-num">3</div>
+          <div class="srow-text">
+            <span class="lbl">Number of Groups</span><br>
+            <span class="form">= 58 ÷ 4</span><br>
+            <span class="ok">= 14 remainder 2</span>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q5"
+          data-show="e-ng1,e-sv1,e-sv2,e-sv3,e-ab,e-at">
+          <div class="srow-num">4</div>
+          <div class="srow-text">
+            <span class="lbl">Solve</span><br>
+            <span class="form">14 groups × $6 = $84</span><br>
+            <span class="form">2 leftover (bought) × $2 = $4</span><br>
+            <span class="form">Total = $84 + $4 = <span class="ok">$88</span></span>
+          </div>
+        </div>
+
+        <div class="answer-box">Amount Cory paid = <strong>$88</strong></div>
+        <div class="btn-row">
+          <button class="btn btn-play" data-q="q5">▶ Animate</button>
+          <button class="btn btn-reset" data-q="q5">↺ Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     QUESTION 6 — Postman's Parcels
+     ══════════════════════════════════════════════ -->
+<div class="problem-card" id="q6">
+  <div class="card-inner">
+    <div class="card-header">Question 6 — Postman's Parcels</div>
+    <div class="card-body">
+
+      <div class="fig-panel">
+        <svg id="svg6" viewBox="0 0 320 290" width="320" height="290">
+
+          <!-- Step 1: 1 group oval (7 undamaged + 2 damaged) -->
+          <text id="f-lbl" class="ve" x="160" y="18" text-anchor="middle"
+            font-size="12" font-weight="700" fill="#9a3412" opacity="0">1 Group = 9 parcels</text>
+          <ellipse id="f-oval" class="ve" cx="160" cy="90" rx="136" ry="60"
+            fill="#fff7ed" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="7,4" opacity="0"/>
+
+          <!-- 7 undamaged parcels (brown boxes) -->
+          <rect id="f-u1" class="ve" x="24"  y="70" width="20" height="24" rx="3" fill="#d97706" stroke="#92400e" stroke-width="1.5" opacity="0"/>
+          <rect id="f-u2" class="ve" x="48"  y="70" width="20" height="24" rx="3" fill="#d97706" stroke="#92400e" stroke-width="1.5" opacity="0"/>
+          <rect id="f-u3" class="ve" x="72"  y="70" width="20" height="24" rx="3" fill="#d97706" stroke="#92400e" stroke-width="1.5" opacity="0"/>
+          <rect id="f-u4" class="ve" x="96"  y="70" width="20" height="24" rx="3" fill="#d97706" stroke="#92400e" stroke-width="1.5" opacity="0"/>
+          <rect id="f-u5" class="ve" x="120" y="70" width="20" height="24" rx="3" fill="#d97706" stroke="#92400e" stroke-width="1.5" opacity="0"/>
+          <rect id="f-u6" class="ve" x="144" y="70" width="20" height="24" rx="3" fill="#d97706" stroke="#92400e" stroke-width="1.5" opacity="0"/>
+          <rect id="f-u7" class="ve" x="168" y="70" width="20" height="24" rx="3" fill="#d97706" stroke="#92400e" stroke-width="1.5" opacity="0"/>
+          <text id="f-ulbl" class="ve" x="96" y="107" text-anchor="middle"
+            font-size="9" fill="#92400e" font-weight="700" opacity="0">7 undamaged ($9.50 each)</text>
+
+          <!-- 2 damaged parcels (red-tinted) -->
+          <rect id="f-d1" class="ve" x="196" y="70" width="20" height="24" rx="3" fill="#fca5a5" stroke="#dc2626" stroke-width="1.5" opacity="0"/>
+          <rect id="f-d2" class="ve" x="220" y="70" width="20" height="24" rx="3" fill="#fca5a5" stroke="#dc2626" stroke-width="1.5" opacity="0"/>
+          <!-- X marks on damaged -->
+          <line id="f-x1a" class="ve" x1="198" y1="72" x2="214" y2="92" stroke="#dc2626" stroke-width="1.5" opacity="0"/>
+          <line id="f-x1b" class="ve" x1="214" y1="72" x2="198" y2="92" stroke="#dc2626" stroke-width="1.5" opacity="0"/>
+          <line id="f-x2a" class="ve" x1="222" y1="72" x2="238" y2="92" stroke="#dc2626" stroke-width="1.5" opacity="0"/>
+          <line id="f-x2b" class="ve" x1="238" y1="72" x2="222" y2="92" stroke="#dc2626" stroke-width="1.5" opacity="0"/>
+          <text id="f-dlbl" class="ve" x="214" y="107" text-anchor="middle"
+            font-size="9" fill="#dc2626" font-weight="700" opacity="0">2 damaged ($7.50)</text>
+
+          <!-- Step 2: group value -->
+          <text id="f-gv1" class="ve" x="160" y="130" text-anchor="middle"
+            font-size="11" fill="#1c1917" opacity="0">(7 × $9.50) + (2 × $7.50)</text>
+          <text id="f-gv2" class="ve" x="160" y="148" text-anchor="middle"
+            font-size="11" fill="#1c1917" opacity="0">= $66.50 + $15.00</text>
+          <text id="f-gv3" class="ve" x="160" y="166" text-anchor="middle"
+            font-size="14" font-weight="800" fill="#ea580c" opacity="0">= $81.50 per group</text>
+
+          <!-- Step 3: number of groups -->
+          <text id="f-ng1" class="ve" x="160" y="188" text-anchor="middle"
+            font-size="12" fill="#1c1917" opacity="0">$2608 ÷ $81.50 =
+            <tspan font-weight="800" fill="#ea580c"> 32 groups</tspan></text>
+
+          <!-- Step 4: solve -->
+          <text id="f-sv1" class="ve" x="160" y="210" text-anchor="middle"
+            font-size="11" fill="#1c1917" opacity="0">Each group → 7 undamaged parcels</text>
+          <text id="f-sv2" class="ve" x="160" y="228" text-anchor="middle"
+            font-size="13" font-weight="800" fill="#ea580c" opacity="0">32 × 7 = 224 undamaged parcels</text>
+
+          <rect id="f-ab" class="ve" x="36" y="242" width="248" height="26"
+            rx="7" fill="#dcfce7" opacity="0"/>
+          <text id="f-at" class="ve" x="160" y="259" text-anchor="middle"
+            font-size="12" font-weight="800" fill="#15803d" opacity="0">224 undamaged parcels ✓</text>
+        </svg>
+        <div class="fig-caption">Click each step below to build the solution</div>
+      </div>
+
+      <div class="work-panel">
+        <div class="problem-text">
+          A postman is paid <strong>$9.50</strong> for every parcel he delivers. If the parcel is
+          slightly <strong>damaged</strong>, he is only paid <strong>$7.50</strong>. Last month he
+          made <strong>$2608</strong>. For every <strong>9 parcels</strong> he delivered,
+          <strong>2 were damaged</strong>. How many <strong>undamaged</strong> parcels did he deliver?
+        </div>
+        <h3>Step-by-step working</h3>
+
+        <div class="step-row" tabindex="0" data-q="q6"
+          data-show="f-lbl,f-oval,f-u1,f-u2,f-u3,f-u4,f-u5,f-u6,f-u7,f-ulbl,f-d1,f-d2,f-x1a,f-x1b,f-x2a,f-x2b,f-dlbl">
+          <div class="srow-num">1</div>
+          <div class="srow-text">
+            <span class="lbl">1 Group</span><br>
+            7 undamaged + 2 damaged = 9 parcels<br>
+            <small>(ratio from question: 9 total, 2 damaged)</small>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q6"
+          data-show="f-oval,f-u1,f-u2,f-u3,f-u4,f-u5,f-u6,f-u7,f-ulbl,f-d1,f-d2,f-x1a,f-x1b,f-x2a,f-x2b,f-dlbl,f-gv1,f-gv2,f-gv3">
+          <div class="srow-num">2</div>
+          <div class="srow-text">
+            <span class="lbl">Group Value</span><br>
+            <span class="form">7 × $9.50 = $66.50</span><br>
+            <span class="form">2 × $7.50 = $15.00</span><br>
+            <span class="form">$66.50 + $15.00 = <span class="ok">$81.50</span></span>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q6"
+          data-show="f-gv3,f-ng1">
+          <div class="srow-num">3</div>
+          <div class="srow-text">
+            <span class="lbl">Number of Groups</span><br>
+            <span class="form">= $2608 ÷ $81.50</span><br>
+            <span class="ok">= 32 groups</span>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q6"
+          data-show="f-ng1,f-sv1,f-sv2,f-ab,f-at">
+          <div class="srow-num">4</div>
+          <div class="srow-text">
+            <span class="lbl">Solve</span><br>
+            Each group has 7 undamaged parcels<br>
+            <span class="form">= 32 × 7 = <span class="ok">224</span></span>
+          </div>
+        </div>
+
+        <div class="answer-box">Number of undamaged parcels = <strong>224</strong></div>
+        <div class="btn-row">
+          <button class="btn btn-play" data-q="q6">▶ Animate</button>
+          <button class="btn btn-reset" data-q="q6">↺ Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     QUESTION 7 — Light Bulbs (Largest Possible)
+     ══════════════════════════════════════════════ -->
+<div class="problem-card" id="q7">
+  <div class="card-inner">
+    <div class="card-header">Question 7 — Light Bulbs</div>
+    <div class="card-body">
+
+      <div class="fig-panel">
+        <svg id="svg7" viewBox="0 0 320 300" width="320" height="300">
+
+          <!-- Step 1: pattern Y R R R R -->
+          <text id="g-lbl" class="ve" x="160" y="18" text-anchor="middle"
+            font-size="12" font-weight="700" fill="#9a3412" opacity="0">1 Group = Y R R R R (5 bulbs)</text>
+
+          <!-- Bracket for 1 group -->
+          <path id="g-brace" class="ve"
+            d="M 18,56 L 18,85 L 148,85 L 148,56"
+            fill="none" stroke="#ea580c" stroke-width="1.5" opacity="0"/>
+          <text id="g-brace-lbl" class="ve" x="83" y="100" text-anchor="middle"
+            font-size="10" fill="#9a3412" font-weight="700" opacity="0">1 group</text>
+
+          <!-- First YRRRR group -->
+          <circle id="g-y1" class="ve" cx="35"  cy="65" r="16" fill="#fde047" stroke="#ca8a04" stroke-width="2" opacity="0"/>
+          <text id="g-yt1" class="ve" x="35"  y="70" text-anchor="middle" font-size="11" font-weight="800" fill="#713f12" opacity="0">Y</text>
+          <circle id="g-r1" class="ve" cx="63"  cy="65" r="16" fill="#fca5a5" stroke="#dc2626" stroke-width="2" opacity="0"/>
+          <text id="g-rt1" class="ve" x="63"  y="70" text-anchor="middle" font-size="11" font-weight="800" fill="#7f1d1d" opacity="0">R</text>
+          <circle id="g-r2" class="ve" cx="91"  cy="65" r="16" fill="#fca5a5" stroke="#dc2626" stroke-width="2" opacity="0"/>
+          <text id="g-rt2" class="ve" x="91"  y="70" text-anchor="middle" font-size="11" font-weight="800" fill="#7f1d1d" opacity="0">R</text>
+          <circle id="g-r3" class="ve" cx="119" cy="65" r="16" fill="#fca5a5" stroke="#dc2626" stroke-width="2" opacity="0"/>
+          <text id="g-rt3" class="ve" x="119" y="70" text-anchor="middle" font-size="11" font-weight="800" fill="#7f1d1d" opacity="0">R</text>
+          <circle id="g-r4" class="ve" cx="147" cy="65" r="16" fill="#fca5a5" stroke="#dc2626" stroke-width="2" opacity="0"/>
+          <text id="g-rt4" class="ve" x="147" y="70" text-anchor="middle" font-size="11" font-weight="800" fill="#7f1d1d" opacity="0">R</text>
+
+          <!-- Dots -->
+          <text id="g-dots" class="ve" x="178" y="72" text-anchor="middle"
+            font-size="20" fill="#94a3b8" opacity="0">· · ·</text>
+
+          <!-- Second YRRRR group -->
+          <circle id="g-y2" class="ve" cx="210" cy="65" r="16" fill="#fde047" stroke="#ca8a04" stroke-width="2" opacity="0"/>
+          <text id="g-yt2" class="ve" x="210" y="70" text-anchor="middle" font-size="11" font-weight="800" fill="#713f12" opacity="0">Y</text>
+          <circle id="g-r5" class="ve" cx="238" cy="65" r="16" fill="#fca5a5" stroke="#dc2626" stroke-width="2" opacity="0"/>
+          <text id="g-rt5" class="ve" x="238" y="70" text-anchor="middle" font-size="11" font-weight="800" fill="#7f1d1d" opacity="0">R</text>
+          <circle id="g-r6" class="ve" cx="266" cy="65" r="16" fill="#fca5a5" stroke="#dc2626" stroke-width="2" opacity="0"/>
+          <text id="g-rt6" class="ve" x="266" y="70" text-anchor="middle" font-size="11" font-weight="800" fill="#7f1d1d" opacity="0">R</text>
+          <circle id="g-r7" class="ve" cx="294" cy="65" r="16" fill="#fca5a5" stroke="#dc2626" stroke-width="2" opacity="0"/>
+          <text id="g-rt7" class="ve" x="294" y="70" text-anchor="middle" font-size="11" font-weight="800" fill="#7f1d1d" opacity="0">R</text>
+
+          <!-- "at least 4 R" annotation -->
+          <path id="g-ann" class="ve" d="M 63,46 Q 105,30 147,46"
+            fill="none" stroke="#9a3412" stroke-width="1.2" stroke-dasharray="4,2" opacity="0"/>
+          <text id="g-ann-lbl" class="ve" x="105" y="28" text-anchor="middle"
+            font-size="9" fill="#9a3412" font-weight="700" opacity="0">at least 4 R</text>
+
+          <!-- Step 2: division -->
+          <text id="g-div1" class="ve" x="160" y="120" text-anchor="middle"
+            font-size="13" fill="#1c1917" opacity="0">282 ÷ 5 =
+            <tspan font-weight="800" fill="#ea580c"> 56 remainder 2</tspan></text>
+
+          <!-- Step 3: handle remainder -->
+          <!-- Remainder bulbs: Y R -->
+          <text id="g-rem-lbl" class="ve" x="160" y="146" text-anchor="middle"
+            font-size="11" fill="#57534e" opacity="0">56 full groups + 2 leftover bulbs</text>
+          <!-- Y R circles for remainder -->
+          <circle id="g-ry" class="ve" cx="128" cy="172" r="16" fill="#fde047" stroke="#ca8a04" stroke-width="2" opacity="0"/>
+          <text id="g-ryt" class="ve" x="128" y="177" text-anchor="middle" font-size="11" font-weight="800" fill="#713f12" opacity="0">Y</text>
+          <circle id="g-rr" class="ve" cx="158" cy="172" r="16" fill="#fca5a5" stroke="#dc2626" stroke-width="2" opacity="0"/>
+          <text id="g-rrt" class="ve" x="158" y="177" text-anchor="middle" font-size="11" font-weight="800" fill="#7f1d1d" opacity="0">R</text>
+          <text id="g-rem-note" class="ve" x="200" y="177" text-anchor="start"
+            font-size="10" fill="#9a3412" font-weight="700" opacity="0">← "YR" = 1 more Y</text>
+
+          <!-- Step 4: solve -->
+          <text id="g-sv1" class="ve" x="160" y="208" text-anchor="middle"
+            font-size="11" fill="#1c1917" opacity="0">56 full groups → 56 yellow bulbs</text>
+          <text id="g-sv2" class="ve" x="160" y="226" text-anchor="middle"
+            font-size="11" fill="#1c1917" opacity="0">2 remainder "YR" → 1 more yellow</text>
+          <text id="g-sv3" class="ve" x="160" y="248" text-anchor="middle"
+            font-size="14" font-weight="800" fill="#ea580c" opacity="0">56 + 1 = 57 yellow bulbs</text>
+
+          <rect id="g-ab" class="ve" x="46" y="260" width="228" height="26"
+            rx="7" fill="#dcfce7" opacity="0"/>
+          <text id="g-at" class="ve" x="160" y="277" text-anchor="middle"
+            font-size="12" font-weight="800" fill="#15803d" opacity="0">Largest number of yellow = 57 ✓</text>
+        </svg>
+        <div class="fig-caption">Click each step below to build the solution</div>
+      </div>
+
+      <div class="work-panel">
+        <div class="problem-text">
+          A total of <strong>282 red and yellow light bulbs</strong> were lined along a fence.
+          There were <strong>at least 4 red bulbs</strong> between any 2 yellow bulbs.
+          What is the <strong>largest possible number of yellow bulbs</strong>?
+        </div>
+        <div class="concept-note" style="background:#fef9c3;border-left:4px solid #ca8a04;color:#713f12;">
+          <strong>Strategy:</strong> To <em>maximise</em> yellow bulbs, use the
+          <em>minimum</em> number of red bulbs (exactly 4) between each yellow.
+          This gives the repeating pattern <strong>Y R R R R</strong>.
+        </div>
+        <h3>Step-by-step working</h3>
+
+        <div class="step-row" tabindex="0" data-q="q7"
+          data-show="g-lbl,g-brace,g-brace-lbl,g-y1,g-yt1,g-r1,g-rt1,g-r2,g-rt2,g-r3,g-rt3,g-r4,g-rt4,g-dots,g-y2,g-yt2,g-r5,g-rt5,g-r6,g-rt6,g-r7,g-rt7,g-ann,g-ann-lbl">
+          <div class="srow-num">1</div>
+          <div class="srow-text">
+            <span class="lbl">1 Group = Y R R R R</span><br>
+            1 yellow + 4 red = 5 bulbs per group<br>
+            <small>(use minimum 4 red to maximise yellow)</small>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q7"
+          data-show="g-y1,g-yt1,g-r1,g-rt1,g-r2,g-rt2,g-r3,g-rt3,g-r4,g-rt4,g-div1">
+          <div class="srow-num">2</div>
+          <div class="srow-text">
+            <span class="lbl">Number of Groups</span><br>
+            <span class="form">= 282 ÷ 5</span><br>
+            <span class="ok">= 56 remainder 2</span>
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q7"
+          data-show="g-div1,g-rem-lbl,g-ry,g-ryt,g-rr,g-rrt,g-rem-note">
+          <div class="srow-num">3</div>
+          <div class="srow-text">
+            <span class="lbl">Handle the remainder</span><br>
+            2 leftover bulbs follow the pattern: <strong>Y R</strong><br>
+            So remainder gives <strong>1 more yellow</strong> bulb
+          </div>
+        </div>
+
+        <div class="step-row" tabindex="0" data-q="q7"
+          data-show="g-rem-lbl,g-sv1,g-sv2,g-sv3,g-ab,g-at">
+          <div class="srow-num">4</div>
+          <div class="srow-text">
+            <span class="lbl">Solve</span><br>
+            <span class="form">56 groups → 56 yellow</span><br>
+            <span class="form">Remainder → 1 more yellow</span><br>
+            <span class="form">= 56 + 1 = <span class="ok">57</span></span>
+          </div>
+        </div>
+
+        <div class="answer-box">Largest number of yellow bulbs = <strong>57</strong></div>
+        <div class="btn-row">
+          <button class="btn btn-play" data-q="q7">▶ Animate</button>
+          <button class="btn btn-reset" data-q="q7">↺ Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;padding:20px 0 32px;color:#a8a29e;font-size:0.8rem;">
+  Concept 2: Grouping &nbsp;|&nbsp; Learning Out of the Box
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  /* ── Tab switching ── */
+  document.querySelectorAll('.tab-btn').forEach(function (btn) {
+    function activate() {
+      document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.problem-card').forEach(function (c) { c.classList.remove('visible'); });
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('visible');
+    }
+    btn.addEventListener('click', activate);
+    btn.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
+    });
+  });
+
+  /* ── SVG element helpers ── */
+  function hideAll(q) {
+    var card = document.getElementById(q);
+    if (!card) return;
+    card.querySelectorAll('.ve').forEach(function (el) {
+      el.setAttribute('opacity', '0');
+    });
+  }
+
+  function showIds(ids) {
+    if (!ids) return;
+    ids.split(',').forEach(function (id) {
+      var el = document.getElementById(id.trim());
+      if (el) el.setAttribute('opacity', '1');
+    });
+  }
+
+  /* ── Step rows ── */
+  document.querySelectorAll('.step-row').forEach(function (row) {
+    function activate() {
+      var q = row.dataset.q;
+      document.querySelectorAll('.step-row[data-q="' + q + '"]').forEach(function (s) {
+        s.classList.remove('active');
+      });
+      row.classList.add('active');
+      hideAll(q);
+      showIds(row.dataset.show);
+    }
+    row.addEventListener('click', activate);
+    row.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
+    });
+  });
+
+  /* ── Animate button ── */
+  document.querySelectorAll('.btn-play').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var q = btn.dataset.q;
+      var steps = document.querySelectorAll('.step-row[data-q="' + q + '"]');
+      var i = 0;
+      var iv = setInterval(function () {
+        if (i >= steps.length) { clearInterval(iv); return; }
+        steps[i].click();
+        i++;
+      }, 1500);
+    });
+  });
+
+  /* ── Reset button ── */
+  document.querySelectorAll('.btn-reset').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var q = btn.dataset.q;
+      hideAll(q);
+      document.querySelectorAll('.step-row[data-q="' + q + '"]').forEach(function (s) {
+        s.classList.remove('active');
+      });
+    });
+  });
+
+});
+</script>
+</body>
+</html>
