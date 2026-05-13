@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Chain — Teach It Once. Turn Every Session Into Five Pieces of Content. Automatically.</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap');
+
+  :root {
+    --navy: #0d1117;
+    --navy-mid: #161b22;
+    --navy-light: #1e2530;
+    --teal: #2dd4bf;
+    --teal-dark: #14b8a6;
+    --white: #ffffff;
+    --gray-100: #f0f6fc;
+    --gray-300: #c9d1d9;
+    --gray-500: #8b949e;
+    --gray-700: #484f58;
+    --divider: rgba(45,212,191,0.2);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    line-height: 1.7;
+    font-size: 17px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    border-bottom: 1px solid var(--divider);
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .hero-banner {
+    width: 100%;
+    display: block;
+    max-height: 480px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* ── LABEL ── */
+  .label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--teal);
+    border: 1px solid var(--teal);
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin-bottom: 20px;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 80px 24px;
+  }
+
+  .section-wide {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 80px 24px;
+  }
+
+  .section + .section,
+  .section + .section-wide,
+  .section-wide + .section {
+    border-top: 1px solid var(--divider);
+  }
+
+  /* ── TYPOGRAPHY ── */
+  h1.hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+
+  h1.hero-title em {
+    font-style: italic;
+    color: var(--teal);
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 24px;
+    color: var(--white);
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+    margin-top: 40px;
+  }
+
+  h3:first-child { margin-top: 0; }
+
+  p {
+    color: var(--gray-300);
+    margin-bottom: 20px;
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  strong { color: var(--white); font-weight: 600; }
+
+  /* ── OPENING STORY ── */
+  .story-section {
+    background: var(--navy-mid);
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .story-section .section {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  blockquote {
+    border-left: 3px solid var(--teal);
+    padding: 16px 24px;
+    margin: 32px 0;
+    background: rgba(45,212,191,0.06);
+    border-radius: 0 8px 8px 0;
+  }
+
+  blockquote p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--gray-100);
+  }
+
+  /* ── WHAT IT DOES ── */
+  .insight-box {
+    background: var(--navy-light);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 36px 40px;
+    margin: 40px 0;
+  }
+
+  .insight-box p {
+    font-size: 1.15rem;
+    color: var(--gray-100);
+    margin-bottom: 0;
+  }
+
+  /* ── SIX PIECES GRID ── */
+  .pieces-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .piece-card {
+    background: var(--navy-mid);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 32px 28px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .piece-card:hover {
+    border-color: var(--teal);
+    transform: translateY(-3px);
+  }
+
+  .piece-number {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .piece-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--white);
+    margin-bottom: 12px;
+    margin-top: 0;
+  }
+
+  .piece-card p {
+    font-size: 0.95rem;
+    color: var(--gray-500);
+    margin-bottom: 0;
+    line-height: 1.65;
+  }
+
+  /* ── STEPS ── */
+  .steps {
+    counter-reset: steps;
+    list-style: none;
+    margin: 40px 0;
+  }
+
+  .steps li {
+    counter-increment: steps;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .steps li:last-child { border-bottom: none; }
+
+  .steps li::before {
+    content: counter(steps);
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: var(--navy);
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  .steps li p { margin: 0; font-size: 1rem; }
+
+  /* ── WHO THIS IS FOR ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  @media (max-width: 640px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  .for-box, .not-box {
+    border-radius: 12px;
+    padding: 32px 28px;
+    border: 1px solid;
+  }
+
+  .for-box {
+    background: rgba(45,212,191,0.06);
+    border-color: rgba(45,212,191,0.3);
+  }
+
+  .not-box {
+    background: rgba(255,255,255,0.03);
+    border-color: rgba(255,255,255,0.1);
+  }
+
+  .for-box h3 { margin-top: 0; }
+  .not-box h3 { margin-top: 0; color: var(--gray-500); }
+
+  .check-list {
+    list-style: none;
+    margin-top: 16px;
+  }
+
+  .check-list li {
+    padding: 6px 0;
+    color: var(--gray-300);
+    font-size: 0.97rem;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .check-list li::before {
+    content: '✓';
+    color: var(--teal);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── PROMISE BOX ── */
+  .promise-box {
+    background: linear-gradient(135deg, rgba(45,212,191,0.1) 0%, rgba(45,212,191,0.03) 100%);
+    border: 1px solid rgba(45,212,191,0.4);
+    border-radius: 16px;
+    padding: 48px 40px;
+    text-align: center;
+    margin: 40px 0;
+  }
+
+  .promise-box h2 {
+    color: var(--teal);
+    margin-bottom: 16px;
+  }
+
+  .promise-box p {
+    max-width: 540px;
+    margin: 0 auto;
+    font-size: 1.05rem;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--navy-mid);
+    border-top: 1px solid var(--divider);
+    text-align: center;
+  }
+
+  .cta-section .section {
+    padding: 100px 24px;
+  }
+
+  .founding-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(45,212,191,0.12);
+    border: 1px solid rgba(45,212,191,0.35);
+    border-radius: 100px;
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--teal);
+    letter-spacing: 0.04em;
+    margin-bottom: 32px;
+  }
+
+  .price-display {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .price-display span {
+    font-size: 0.4em;
+    color: var(--gray-500);
+    vertical-align: top;
+    margin-top: 12px;
+    display: inline-block;
+  }
+
+  .price-note {
+    font-size: 0.95rem;
+    color: var(--gray-500);
+    margin-bottom: 48px;
+  }
+
+  .price-note strong { color: var(--teal); }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--teal);
+    color: var(--navy);
+    font-size: 1.05rem;
+    font-weight: 800;
+    padding: 18px 48px;
+    border-radius: 8px;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(45,212,191,0.3);
+  }
+
+  .cta-btn:hover {
+    background: var(--teal-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(45,212,191,0.4);
+  }
+
+  .cta-guarantee {
+    margin-top: 24px;
+    font-size: 0.88rem;
+    color: var(--gray-500);
+  }
+
+  /* ── PS ── */
+  .ps-section {
+    border-top: 1px solid var(--divider);
+  }
+
+  .ps-box {
+    background: var(--navy-light);
+    border-radius: 12px;
+    padding: 36px 40px;
+    border-left: 4px solid var(--teal);
+  }
+
+  .ps-box p {
+    font-style: italic;
+    color: var(--gray-300);
+  }
+
+  .ps-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    color: var(--teal);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--divider);
+    padding: 40px 24px;
+    text-align: center;
+    color: var(--gray-700);
+    font-size: 13px;
+  }
+
+  footer strong { color: var(--gray-500); }
+
+  /* ── DIVIDER ACCENT ── */
+  .teal-divider {
+    width: 48px;
+    height: 3px;
+    background: var(--teal);
+    border-radius: 2px;
+    margin: 32px 0;
+  }
+
+  /* ── WHAT CHANGES CALLOUT ── */
+  .quiet-change {
+    background: var(--navy-light);
+    border-radius: 12px;
+    padding: 40px;
+    margin: 40px 0;
+    border: 1px solid var(--divider);
+  }
+
+  .quiet-change p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--gray-100);
+    margin-bottom: 0;
+    line-height: 1.7;
+  }
+
+  /* ── STAT BAR ── */
+  .stat-bar {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 48px 24px;
+    background: var(--navy-mid);
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: var(--teal);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--gray-500);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 640px) {
+    .section, .section-wide { padding: 60px 20px; }
+    .insight-box, .ps-box, .quiet-change { padding: 28px 24px; }
+    .promise-box { padding: 40px 24px; }
+    .pieces-grid { grid-template-columns: 1fr; }
+    .cta-btn { padding: 16px 32px; width: 100%; text-align: center; }
+    .stat-bar { gap: 24px; padding: 36px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO BANNER -->
+<section class="hero">
+  <img
+    class="hero-banner"
+    src="https://raw.githubusercontent.com/johnyeo10/visual/main/content-chain-banner.png"
+    onerror="this.style.display='none'; document.getElementById('hero-fallback').style.display='flex';"
+    alt="Content Chain — Teach It Once"
+  />
+  <div id="hero-fallback" style="display:none; background:#0d1117; padding:80px 24px; align-items:center; justify-content:center; gap:48px; flex-wrap:wrap; min-height:320px; border-bottom:1px solid rgba(45,212,191,0.2);">
+    <div style="flex:1; min-width:260px;">
+      <p style="font-size:11px; font-weight:800; letter-spacing:0.15em; color:#2dd4bf; text-transform:uppercase; margin-bottom:16px;">Teach It Once</p>
+      <h1 style="font-family:'Playfair Display',serif; font-size:clamp(3rem,8vw,5rem); font-weight:900; color:#fff; line-height:1.05; margin:0;">Content <em style="color:#2dd4bf; font-style:italic;">Chain.</em></h1>
+      <div style="display:flex; gap:8px; margin-top:20px;">
+        <span style="width:10px;height:10px;border-radius:50%;background:#2dd4bf;"></span>
+        <span style="width:10px;height:10px;border-radius:50%;background:#555;"></span>
+        <span style="width:10px;height:10px;border-radius:50%;background:#333;"></span>
+      </div>
+    </div>
+    <div style="flex:1; min-width:260px; border-left:1px solid rgba(45,212,191,0.25); padding-left:48px;">
+      <p style="font-family:'Playfair Display',serif; font-style:italic; font-size:clamp(1.3rem,3vw,1.9rem); color:#f0f6fc; line-height:1.45; margin:0;"><em>Turn every teaching session into five pieces of content. Automatically.</em></p>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF STAT BAR -->
+<div class="stat-bar">
+  <div class="stat">
+    <span class="stat-number">50,000+</span>
+    <span class="stat-label">Products Sold</span>
+  </div>
+  <div class="stat">
+    <span class="stat-number">45,000+</span>
+    <span class="stat-label">Families in Singapore</span>
+  </div>
+  <div class="stat">
+    <span class="stat-number">6</span>
+    <span class="stat-label">Pieces Per Session</span>
+  </div>
+  <div class="stat">
+    <span class="stat-number">1 hr</span>
+    <span class="stat-label">Per Week</span>
+  </div>
+</div>
+
+<!-- OPENING STORY -->
+<section class="story-section">
+  <div class="section">
+    <span class="label">The story that started everything</span>
+
+    <p>A mother sent me a message one evening.</p>
+    <p>She said she cried reading my post.</p>
+    <p>Not because it was sad. Because it was real.</p>
+
+    <p>I had written about teaching my middle daughter. Just an ordinary evening at home. She was stuck on a problem. I sat beside her. I didn't teach her the answer. I taught her how to think.</p>
+
+    <p>And somewhere in that story, a mother on the other side of her phone screen felt seen.</p>
+
+    <blockquote>
+      <p>"Coach John understands me. He's not just a tutor. He's a parent like me."</p>
+    </blockquote>
+
+    <p>That message changed how I understood content.</p>
+    <p>I wasn't creating posts. I was sharing moments. And the moments were doing something no advertisement ever could. They were building trust before I ever met anyone.</p>
+
+    <div class="teal-divider"></div>
+
+    <p>I've been doing this for years now. More than 50,000 products sold. More than 45,000 families in Singapore who know my name. Not because I was the best teacher in the room. Because I kept showing up with stories that made people feel less alone.</p>
+
+    <p>Content built everything I have.</p>
+    <p>And then it built something else. A second 6-figure income from people who saw how I worked and wanted to learn the same.</p>
+    <p><strong>All of it. From stories.</strong></p>
+  </div>
+</section>
+
+<!-- THE REAL PROBLEM -->
+<section>
+  <div class="section">
+    <span class="label">The honest part</span>
+    <h2>For the longest time, creating content cost me something I didn't want to pay.</h2>
+
+    <p>Time I should have been spending with my kids.</p>
+
+    <p>I would finish a long day. The girls needed me. And somewhere in the back of my mind was this weight. The post I hadn't written. The week I'd gone quiet. The guilt of knowing content matters and still having nothing left to give it.</p>
+
+    <p>I didn't need more motivation. I had plenty of that.</p>
+    <p>I needed a system that respected my time.</p>
+
+    <p><strong>So I built one.</strong></p>
+
+    <div class="teal-divider"></div>
+
+    <p>Now here's what my week looks like.</p>
+
+    <ul class="steps">
+      <li><p>I run a session. A coaching call, an open office, a class. I talk. My students ask questions. Real moments happen.</p></li>
+      <li><p>After the session I open my AI system and type one command.</p></li>
+      <li><p>By the time I come back, the content is done — six pieces, ready to post.</p></li>
+      <li><p>I close the laptop and I go be with my kids.</p></li>
+    </ul>
+
+    <p style="font-size:1.15rem; color:var(--white); font-weight:600;">That's the Content Chain.</p>
+  </div>
+</section>
+
+<!-- WHAT IT ACTUALLY DOES -->
+<section style="background:var(--navy-mid); border-top:1px solid var(--divider); border-bottom:1px solid var(--divider);">
+  <div class="section">
+    <span class="label">What it actually does</span>
+    <h2>The content problem isn't a writing problem.</h2>
+
+    <div class="insight-box">
+      <p>You already have the stories. Every session you run is full of them. The student who finally got it. The parent who asked the question everyone was afraid to ask. The moment in a call when everything shifted.</p>
+    </div>
+
+    <p>The problem isn't having nothing to say.</p>
+    <p>The problem is that by the time you sit down to say it, you're exhausted.</p>
+
+    <p>The Content Chain doesn't ask you to find more energy. It asks you to hit record. Everything else it handles.</p>
+
+    <p style="font-size:1.15rem; color:var(--white); font-weight:600;">One session becomes six pieces of content. Every week. Without the dread.</p>
+  </div>
+</section>
+
+<!-- THE SIX PIECES -->
+<section>
+  <div class="section-wide">
+    <div style="max-width:740px; margin:0 auto 40px;">
+      <span class="label">The six pieces</span>
+      <h2>Every session. Six pieces. Zero extra thinking.</h2>
+    </div>
+
+    <div class="pieces-grid">
+      <div class="piece-card">
+        <span class="piece-number">01</span>
+        <h3>The Motivational Poster</h3>
+        <p>One quote from your session. One image prompt. Ready to drop into ChatGPT and generate a shareable poster your audience will save, repost, and pin on their wall.</p>
+      </div>
+
+      <div class="piece-card">
+        <span class="piece-number">02</span>
+        <h3>The Facebook Story Post</h3>
+        <p>The post that stops the scroll. Not because it's clever — because it's true. The chain reads your session, finds the moment, and writes the story in your voice. Five hook options. You pick one. You post it.</p>
+      </div>
+
+      <div class="piece-card">
+        <span class="piece-number">03</span>
+        <h3>The Instagram Caption</h3>
+        <p>Same story. Right length for Instagram. Five hashtags. Done automatically from the Facebook post. Two platforms. One idea. Zero extra thinking.</p>
+      </div>
+
+      <div class="piece-card">
+        <span class="piece-number">04</span>
+        <h3>Five Branded Story Slides</h3>
+        <p>Your face, your colours, your CTA. Five slides ready to upload. Stories keep you visible every single day with the people who already follow you — and top of mind is what makes someone think of you when they're ready to buy.</p>
+      </div>
+
+      <div class="piece-card">
+        <span class="piece-number">05</span>
+        <h3>The Quote Carousel</h3>
+        <p>Ten quotes pulled from your session. Ten image prompts you take straight to ChatGPT or Canva. Carousels get saved — and saved posts keep working for weeks after you post them.</p>
+      </div>
+
+      <div class="piece-card">
+        <span class="piece-number">06</span>
+        <h3>The Video Script</h3>
+        <p>A full script built from your session. Hook, story, shift, close. Read-off ready. You hit record. One take. You post. No more sitting in front of a camera wondering what to say.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE ONLY DECISION -->
+<section style="background:var(--navy-mid); border-top:1px solid var(--divider); border-bottom:1px solid var(--divider);">
+  <div class="section" style="text-align:center;">
+    <span class="label">Your only job</span>
+    <h2>Pick which idea from your session to turn into content.</h2>
+
+    <div class="insight-box" style="text-align:left; max-width:600px; margin:40px auto 0;">
+      <p>You don't write the post. You don't adapt it for Instagram. You don't design the slides. You don't prompt the carousel. You don't script the video.</p>
+      <p style="margin-top:16px; margin-bottom:0; color:var(--white); font-weight:600;">The chain does all of it. Your only job is to show up to your session and hit record.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT CHANGES -->
+<section>
+  <div class="section">
+    <span class="label">What actually changes</span>
+    <h2>Not just your content output. Something quieter than that.</h2>
+
+    <p>You stop carrying the weight of "I should be posting."</p>
+
+    <p>That low-level guilt that sits in the background of every evening you spend with your family instead of at your desk. The voice that says you're falling behind. That your competitors are showing up and you're not.</p>
+
+    <p>The Content Chain doesn't silence that voice with discipline or willpower.</p>
+    <p><strong>It removes the reason the voice exists.</strong></p>
+
+    <div class="quiet-change">
+      <p>When one session gives you a full week of content, there's nothing to feel guilty about. You were present for your students. You were present for your family. And your content ran anyway.</p>
+    </div>
+
+    <p>That's the feeling I wanted when I built this.</p>
+    <p style="font-size:1.15rem; color:var(--white); font-weight:600;">Not productivity. Presence.</p>
+  </div>
+</section>
+
+<!-- WHAT YOU NEED -->
+<section style="background:var(--navy-mid); border-top:1px solid var(--divider); border-bottom:1px solid var(--divider);">
+  <div class="section">
+    <span class="label">What you need to run it</span>
+    <h2>You probably already have everything.</h2>
+
+    <ul class="check-list" style="margin-top:24px;">
+      <li>A session you're already running</li>
+      <li>A recording or transcript</li>
+      <li>One hour a week</li>
+    </ul>
+
+    <div style="margin-top:32px;">
+      <p>No new platforms to learn. No complicated setup. No design skills. No writing sessions on Sunday.</p>
+      <p>Just the sessions you're already running, turned into content you've always meant to create.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHO THIS IS FOR -->
+<section>
+  <div class="section">
+    <span class="label">Is this for you?</span>
+    <h2>You have the stories. You've just never had the system.</h2>
+
+    <div class="two-col">
+      <div class="for-box">
+        <h3>This is for you if…</h3>
+        <ul class="check-list">
+          <li>You're a tutor, coach, or educator</li>
+          <li>You know showing up online matters</li>
+          <li>You've tried to be consistent — it lasted a few weeks</li>
+          <li>You're not lazy. You're doing a full-time job and building something on top of it</li>
+          <li>You have the stories but not the system</li>
+        </ul>
+      </div>
+
+      <div class="not-box">
+        <h3 style="color:var(--gray-500);">This is not for you if…</h3>
+        <ul class="check-list" style="margin-top:16px;">
+          <li style="color:var(--gray-500);">You want AI to replace your voice</li>
+          <li style="color:var(--gray-500);">You don't show up to sessions with something real</li>
+          <li style="color:var(--gray-500);">You're looking for a shortcut that doesn't require you</li>
+        </ul>
+        <p style="font-size:0.9rem; color:var(--gray-700); margin-top:20px;">Every piece the chain produces comes from what you actually said. Your stories. Your moments. Your words. The chain extracts and shapes them. It doesn't invent them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSIDE THE COMMUNITY -->
+<section style="background:var(--navy-mid); border-top:1px solid var(--divider); border-bottom:1px solid var(--divider);">
+  <div class="section">
+    <span class="label">Inside the community</span>
+    <h2>You're never building alone.</h2>
+
+    <ul class="check-list" style="margin-top:24px; margin-bottom:32px;">
+      <li>We run the chain together in your first week — you leave with six pieces of content ready to post</li>
+      <li>Live session every week, together</li>
+      <li>New AI content skills dropped into the community as I build them — every new format, workflow, and tool I test goes to members first</li>
+      <li>Every question answered by me personally. Not a team. Not AI. Me.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- THE PROMISE -->
+<section>
+  <div class="section">
+    <div class="promise-box">
+      <h2>The Promise</h2>
+      <p>Run the Content Chain once with me. If you don't walk away with six pieces of content from one session, I'll refund every cent. No questions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section">
+    <div class="founding-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Founding Member Offer — First 50 Only
+    </div>
+
+    <div class="price-display">
+      <span>$</span>67<span style="font-size:0.25em; color:var(--gray-500); vertical-align:middle;">/mo</span>
+    </div>
+
+    <p class="price-note"><strong>Price goes up permanently after the first 50 members.</strong></p>
+
+    <a href="https://learningoutofthebox.thrivecart.com/get-content-chain/" class="cta-btn">
+      Join Content Chain →
+    </a>
+
+    <p class="cta-guarantee">100% money-back guarantee if you don't get six pieces of content from your first session.</p>
+  </div>
+</section>
+
+<!-- PS -->
+<section class="ps-section">
+  <div class="section">
+    <div class="ps-box">
+      <span class="ps-label">P.S.</span>
+      <p>The story about my daughter. The mother who cried. That post was written in under two hours using this exact system. From a session I had already run. For a week I needed to be fully present for my family.</p>
+      <p style="margin-top:16px; color:var(--white); font-style:normal; font-weight:600;">The content ran. I was home.</p>
+      <p style="margin-top:8px;">That's what this is for.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <strong>John Yeo</strong> — Product Architect | Learning Out of the Box<br>
+  <span style="margin-top:8px; display:block;">© 2026 Learning Out of the Box. All rights reserved.</span>
+</footer>
+
+</body>
+</html>
